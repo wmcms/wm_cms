@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="share/head :: head(~{::seo})">
+	<seo>
+		<title>CMS管理平台</title>
+	</seo>
+</head>
+<body class="hold-transition login-page" style="background-color:#aabcd1;">
+<div class="login-box">
+	<div class="login-logo">
+		<a href="/" style="color:#fff;">CMS</a>
+	</div>
+	<div class="login-box-body">
+		<form>
+			<div class="form-group has-feedback">
+				<label class="sr-only" for="username">用户名</label>
+				<input type="text" class="form-control required" id="username" name="userName"  placeholder="用户名" maxlength="50">
+				<span class="glyphicon glyphicon-user form-control-feedback"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label class="sr-only" for="password">密码</label>
+				<input type="password" class="form-control required" id="password" name="password"  maxlength="50" placeholder="密码" autocomplete="off">
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-xs-8"></div>
+			<div class="col-xs-4">
+				<button  class="btn btn-primary btn-block btn-flat" onclick="R.Login()">登录</button>
+			</div>
+		</div>
+	</div>
+</div>
+<th:block th:replace="share/foot::script(~{::script})">
+	<script type="text/javascript">
+		var D = {
+			Url: {
+				Login_User_Url: '/user/login',
+				Admin_Home_User:"/"
+			}
+		}
+		var R={
+			Login:function () {
+				if ($('form').valid()) {
+					var postData=$('form').serializeJson();
+					$.Post({
+						Url: D.Url.Login_User_Url,
+						Data: postData,
+						CallBack: function (res) {
+							if (res.success) {
+								$.SetCookie("AUTHENTICATION_TOKEN",res.data,24*60*60*1000);
+								window.location.href=D.Url.Admin_Home_User;
+							}
+							else{
+								W.Error(res.msg);
+							}
+						}
+					});
+				}
+			},
+			Init:function () {
+				$("form").validate();
+			}
+
+		}
+		$(function () {
+			R.Init();
+		});
+	</script>
+</th:block>
+
+
+</body>
+</html>

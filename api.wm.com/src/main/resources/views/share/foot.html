@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="script(myscript)">
+    <div class="modal fade " id="ajax" role="basic" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog" style="width:800px;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/static/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span> &nbsp;&nbsp;正在加载，请稍候... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="tplLoading" type="text/template">
+        <div class="modal-body">
+            <img src="/static/img/loading-spinner-grey.gif" alt="" class="loading">
+            <span> &nbsp;&nbsp;正在加载，请稍候... </span>
+        </div>
+    </script>
+    <script id="tplTip" type="text/template">
+        <div class="alert alert-${it.type}">
+            <strong>温馨提示：</strong>
+           <span style="padding-left: 10px;"> ${it.msg}</span>
+        </div>
+        </script>
+    <script id="tplconfirm" type="text/template">
+        <div id="confirm_model" class="modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">Close</span></button>
+                        <h5 class="modal-title"><i class="fa fa-exclamation-circle"></i>
+                            <span class="title">温馨提示</span>
+                        </h5>
+                    </div>
+                    <div class="modal-body small">
+                        <p ><span class="message">${it.msg}</span></p>
+                    </div>
+                    <div class="modal-footer" >
+                        <button type="button" class="btn btn-primary ok" data-dismiss="modal">确认</button>
+                        <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="/static/lib/jquery.min.js"></script>
+    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+<!--    <script src="/static/lib/jquery-ui/jquery-ui.js"></script>-->
+    <script src="/static/lib/jquery-validation/jquery-validation.min.js"></script>
+    <script src="/static/js/jquery.validation_zh_CN.js"></script>
+<!--    <script src="/static/lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>-->
+<!--    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload.js"></script>-->
+<!--    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>-->
+<!--    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload-validate.js"></script>-->
+    <script src="/static/lib/jquery-cookie/jquery-cookie.min.js"></script>
+    <script src="/static/js/plugins.js"></script>
+    <script src="/static/lib/juicer.js"></script>
+    <script src="/static/lib/jquery.pager.js"></script>
+    <script src="/static/lib/common.js"></script>
+<!--    <script src="/static/lib/ztree/js/jquery.ztree.all.min.js"></script>-->
+<!--    <script src="/static/lib/My97DatePicker/cn_WdatePicker.js"></script>-->
+<!--    <script src="/static/lib/ueditor/ueditor.config.js"></script>-->
+<!--    <script src="/static/lib/ueditor/ueditor.all.min.js"></script>-->
+<!--    <script src="/static/lib/ueditor/lang/zh-cn/zh-cn.js"></script>-->
+<!--    <script src="/static/lib/editormd/editormd.min.js"></script>-->
+<!--    <script src="/static/js/editormd.plugin.js"></script>-->
+<!--    <script src="/static/lib/to-markdown.js"></script>-->
+<!--    <script src="/static/lib/echarts.common.min.js"></script>-->
+<!--    <script src="/static/js/plugins.js"></script>-->
+<!--    <script src="/static/js/jspxcms_choose.js"></script>-->
+    <th:block th:replace="${myscript}" />
+</div>

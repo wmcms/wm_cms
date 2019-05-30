@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>jspXCMS管理平台</title>
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/lib/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/static/lib/jquery-ui/jquery-ui.css"/>
+    <link rel="stylesheet" href="/static/lib/jquery-minicolors/jquery.minicolors.css">
+    <link rel="stylesheet" href="/static/lib/ztree/css/metroStyle/metroStyle.css"/>
+    <link rel="stylesheet" href="/static/lib/adminlte/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/static/lib/adminlte/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="/static/lib/jquery-file-upload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="/static/lib/editormd/css/editormd.min.css"/>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!--[if lt IE 9]>
+    <script src="/static/lib/html5shiv/html5shiv.min.js"></script>
+    <script src="/static/lib/respond/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        CTX="";CMSCP="/cmscp";
+        window.UEDITOR_HOME_URL = "/static/lib/ueditor/";
+    </script>
+    <script src="/static/lib/jquery/jquery.min.js"></script>
+    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="/static/lib/jquery-validation/jquery-validation.min.js"></script>
+    <script src="/static/js/jquery.validation_zh_CN.js"></script>
+    <script src="/static/lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+    <script src="/static/lib/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
+    <script src="/static/lib/jquery-form/jquery-form.min.js"></script>
+    <script src="/static/lib/jquery-minicolors/jquery.minicolors.min.js"></script>
+    <script src="/static/lib/jquery-cookie/jquery-cookie.min.js"></script>
+    <script src="/static/lib/ztree/js/jquery.ztree.all.min.js"></script>
+    <script src="/static/lib/My97DatePicker/cn_WdatePicker.js"></script>
+    <script src="/static/lib/ueditor/ueditor.config.js"></script>
+    <script src="/static/lib/ueditor/ueditor.all.min.js"></script>
+    <script src="/static/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="/static/lib/editormd/editormd.min.js"></script>
+    <script src="/static/js/editormd.plugin.js"></script>
+    <script src="/static/lib/to-markdown.js"></script>
+    <script src="/static/lib/echarts.common.min.js"></script>
+    <script src="/static/js/plugins.js"></script>
+    <script src="/static/js/jspxcms_choose.js"></script>
+    <script type="text/javascript">
+        $(function() {
+
+            $("#sortHead").headSort();
+        });
+        function confirmDelete() {
+            return confirm("您确定删除吗？");
+        }
+        function optSingle(opt) {
+            if(Cms.checkeds("ids")==0) {
+                alert("请选择数据！");
+                return false;
+            }
+            if(Cms.checkeds("ids")>1) {
+                alert("只能选择一条数据！");
+                return false;
+            }
+            var id = $("input[name='ids']:checkbox:checked").val();
+            location.href=$(opt+id).attr("href");
+        }
+        function optDelete(form) {
+            if(Cms.checkeds("ids")==0) {
+                alert("请选择数据！");
+                return false;
+            }
+            if(!confirmDelete()) {
+                return false;
+            }
+            form.action='delete.do';
+            form.submit();
+            return true;
+        }
+    </script>
+</head>
+<body class="skin-blue content-body">
+
+
+
+<!-- 用于显示操作结果信息。配合Controller的RedirectAttributes.addFlashAttribute("message","xxx")，可以只在第一次访问页面时显示信息，刷新页面不会重复显示  -->
+<script type="text/javascript">
+    var messageOptions = {};
+    function messageCallback() {
+        setTimeout(function() {
+            $("#message-toggler").hide();
+        }, 600 );
+    };
+    function showMessage(message) {
+        if(message) {
+            $("#message-effect").html(message);
+        }
+        $("#message-toggler").show();
+        $("#message-toggler").css("left",($(window).width() - $("#message-toggler").outerWidth())/2);
+        $("#message-effect").effect("highlight", messageOptions, 1200);
+        $("#message-effect").effect("highlight", messageOptions, 1200, messageCallback);
+    }
+
+</script>
+
+<div id="message-toggler" style="display:none;position:absolute;top:8px;background-color:#ccc;">
+    <div id="message-effect" style="font-size:16px;font-weight:bold;padding:8px 20px;_width:50px;word-break:keep-all;white-space:nowrap;text-align:center;color:#00a65a;">
+
+
+
+        操作成功
+
+    </div>
+</div>
+
+<div class="content-header">
+    标签管理
+</div>
+<div class="content">
+    <div class="box box-primary">
+        <div class="box-body table-responsive">
+            <form class="form-inline ls-search" action="list.do" method="get">
+                <div class="form-group">
+                    <label>名称</label>
+                    <input class="form-control input-sm" type="text" name="search_CONTAIN_name" value=""/>
+                </div>
+                <button class="btn btn-default btn-sm" type="submit">搜索</button>
+            </form>
+            <form method="post">
+
+
+
+                <div class="btn-toolbar ls-btn-bar">
+                    <div class="btn-group">
+
+                        <button class="btn btn-default" type="button" onclick="location.href='create.do?';">新增</button>
+
+                    </div>
+                    <div class="btn-group">
+
+                        <button class="btn btn-default" type="button" onclick="return optSingle('#copy_opt_');">复制</button>
+
+
+                        <button class="btn btn-default" type="button" onclick="return optSingle('#edit_opt_');">修改</button>
+
+                    </div>
+                    <div class="btn-group">
+
+                    </div>
+                </div>
+                <table id="pagedTable" class="table table-condensed table-bordered table-hover ls-tb">
+                    <thead id="sortHead" pagesort="" pagedir="" pageurl="list.do?page_sort={0}&page_sort_dir={1}&">
+                    <tr class="ls_table_th">
+                        <th width="25"><input type="checkbox" onclick="Cms.check('ids',this.checked);"/></th>
+                        <th width="130">操作</th>
+                        <th width="30" class="ls-th-sort"><span class="ls-sort" pagesort="id">ID</span></th>
+                        <th class="ls-th-sort"><span class="ls-sort" pagesort="name">名称</span></th>
+                        <th class="ls-th-sort"><span class="ls-sort" pagesort="number">编码</span></th>
+                        <th class="ls-th-sort"><span class="ls-sort" pagesort="type">类型</span></th>
+                        <th class="ls-th-sort"><span class="ls-sort" pagesort="template">模板</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ondblclick="location.href=$('#edit_opt_1').attr('href');">
+                        <td><input type="checkbox" name="ids" value="1"/></td>
+                        <td align="center">
+
+                            <a id="copy_opt_1" href="create.do?id=1&" class="ls-opt">复制</a>
+
+
+                            <a id="edit_opt_1" href="edit.do?id=1&position=0&" class="ls-opt">修改</a>
+
+
+                        </td>
+                        <td>1</td>
+                        <td>首页广告</td>
+                        <td>homepage</td>
+                        <td>图片</td>
+                        <td>/sys_ad/ad_homepage.html</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

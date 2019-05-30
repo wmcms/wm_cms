@@ -1,0 +1,5 @@
+############## Windows 命令############
+netstat -ano  --查端口号
+
+taskskill /pid 2850 -f --强制终止进程
+

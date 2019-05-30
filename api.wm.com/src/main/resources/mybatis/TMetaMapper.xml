@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IMetaMapper">
+    <resultMap id="itemMap" type="com.wilson.cms.vo.Meta">
+        <id column="meta_id" property="metaId" jdbcType="BIGINT"/>
+        <id column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="base_column_list">  meta_id,type, parent_id, name,level,sort  </sql>
+    <select id="getAllMeta" resultMap="itemMap" >
+        select
+        <include refid="base_column_list"/>
+        from meta   where 1=1 and `status` = 0
+        order by level,sort,update_time desc
+    </select>
+    <select id="searchMeta" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs">
+        select  c.meta_id,c.type, c.parent_id,  c.name, c.level, c.sort,p.name as parent_name
+        from meta c
+        left join meta p on c.parent_id=p.meta_id
+        where 1=1 and  c.status = 0
+        <if test="keyword != null">
+            and (c.name like "%"#{keyword} "%" )
+        </if>
+        order by c.sort,c.update_time desc
+    </select>
+    <insert id="add" parameterType="com.wilson.cms.po.TMeta">
+        insert into meta(meta_id, name, create_user_id,create_time,update_time
+        <if test="parentPath!=null">,parent_path</if>
+        <if test="parentId!=null">,parent_id</if>
+        <if test="level!=null">,level</if>
+        <if test="sort!=null">,sort</if>
+        )
+        select #{metaId},#{name},#{createUserId} ,#{createTime},#{updateTime}
+        <if test="parentPath!=null">,#{parentPath}</if>
+        <if test="parentId!=null">,#{parentId}</if>
+        <if test="level!=null">,#{level}</if>
+        <if test="sort!=null">,#{sort}</if>
+    </insert>
+    <update id="update">
+        update meta set update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="name!=null">,name=#{name}</if>
+        <if test="parentPath!=null">,parent_path=#{parentPath}</if>
+        <if test="parentId!=null">,parent_id=#{parentId}</if>
+        <if test="sort!=null">,sort=#{sort}</if>
+        <if test="level!=null">,level=#{level}</if>
+        <if test="status!=null">,status=#{status}</if>
+        where meta_id=#{metaId}
+    </update>
+    <update id="batchDelete" parameterType="java.util.List">
+        UPDATE
+        meta
+        SET `status`=1
+        WHERE meta_id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

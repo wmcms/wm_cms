@@ -1,0 +1,29 @@
+#==============CMS 自定义配置=================#
+
+
+#枚举
+cms:
+  #用户类型
+  userType:
+    - key: 1
+      text: "系统用户"
+    - key: 2
+      text: "普通会员"
+  #用户状态
+  userStatus:
+    - key: 0
+      text: "有效"
+    - key: 1
+      text: "禁用"
+    - key: -1
+      text: "删除"
+  #字典类型
+  meateType:
+      - key: 1
+        text: "文章分类"
+      - key: 2
+        text: "素材分类"
+      - key: 3
+        text: "广告位"
+      - key: 4
+        text: "登录方式"

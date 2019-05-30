@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="share/head :: head(~{::seo})">
+    <seo>
+        <title>用户管理</title>
+        <meta name="keyword" content="kkkkkkkkk">
+    </seo>
+</head>
+<body class="skin-blue content-body">
+<div class="content-header">
+    <h1>用户管理 - 列表
+        <small>(共 <span id="txtRecordCount">0</span> 条)</small>
+    </h1>
+</div>
+<div class="content">
+    <div class="box box-primary">
+        <div class="box-body table-responsive">
+            <div class="row">
+                <div class="col-xs-2 text-center">
+                    <div class="btn-toolbar ls-btn-bar">
+                        <div class="btn-group">
+                            <button class="btn btn-default" type="button" onclick="location.href='/user/edit';">新增
+                            </button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-default btnBatchDel" type="button" >批量删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input type="text" id="search_keyowrd" name="keyword" class="form-control"
+                               placeholder="请输入关键字(用户名、昵称)">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="btnSearchData" type="button"
+                                    onclick="javascript:R.Search();">
+                                <span class="xlc-dark-search-icon">搜索</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-condensed table-bordered table-hover ls-tb">
+                        <thead>
+                        <tr class="ls_table_th">
+                            <th class="w60" >
+                                <input type="checkbox" id="checkAll" class="cur"/>
+                                <label for="checkAll" class="cur">全选</label>
+                            </th>
+                            <th class="w50">ID</th>
+                            <th class="w100">用户名</th>
+                            <th class="w100">昵称</th>
+                            <th class="w100">姓名</th>
+                            <th class="w100">性别</th>
+                            <th class="w100">手机</th>
+                            <th class="w100">类型</th>
+                            <th class="w100">状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbUser">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row part-right">
+                <div class="col-xs-12 text-center">
+                    <nav aria-label="Page navigation" id="pager"></nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script id="tplUser" type="text/template">
+    {@if Data!=null && Data.length>0}
+    {@each Data as it,index}
+    <tr>
+        <td><input type="checkbox" name="id" class="cur" value="${it.userId}"></td>
+        <td>${it.userId}</td>
+        <td>${it.userName}</td>
+        <td>${it.nickname}</td>
+        <td>${it.realName|Default}</td>
+        <td>${it.gender|GenderText}</td>
+        <td>${it.mobile|DefaultText}</td>
+        <td>${it.userType|UserTypeText}</td>
+        <td>${it.status|StatusText}</td>
+        <td>
+            <a href="/user/edit?id=${it.userId}">编辑</a>
+            <a href="javascript:void(0);" data-type="disable" data-id="${it.userId}" class="operation">禁用</a>
+            <a href="javascript:void(0);" data-type="enable" data-id="${it.userId}" class="operation">激活</a>
+        </td>
+    </tr>
+    {@/each}
+    {@else}
+    <tr>
+        <td colspan="10" class="ls-norecord">没有找到相关数据！</td>
+        </tr>
+    {@/if}
+</script>
+<footer th:include="share/foot::script(~{::script})">
+    <script type="text/javascript">
+        var __Data__ = {
+            Url: {
+                Search_User_Url: '/user/search',
+                Save_User_Url: '/user/save',
+                BatchDelete_User_Url: '/user/batchdelete',
+            }
+        }
+    </script>
+    <script type="text/javascript" src="/static/js/user/index.js">
+    </script>
+</footer>
+</body>
+</html>

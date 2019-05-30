@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="share/head :: head(~{::seo})">
+    <seo>
+        <title>编辑用户</title>
+    </seo>
+</head>
+<body class="skin-blue content-body">
+<div class="content-header">
+    <h1>用户管理 - 新增</h1>
+</div>
+<div class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" onclick="R.Save()">保 存</button>
+                <a class="btn btn-default"  onclick="location.href='/meta'">取 消</a>
+
+            </div>
+        </div>
+        <div class="box-body">
+            <form class="form-horizontal">
+                <input type="hidden" name="metaId" th:value="${metaId}"/>
+                <script type="text/template">
+                    <input type="hidden" name="metaId" value="${it.metaId|Default,0}"/>
+                    <input type="hidden" name="parentId" value="${it.parentId|Default,0}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-4 control-label">
+                                <em class="required">*</em>名称</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="name" name="name"  value="${it.name|Default}" maxlength="50"
+                                       class="form-control {required:true,messages:{required:'名称不能为空'}}"/>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label  class="col-sm-4 control-label">
+                                    <em class="required">*</em> 类型</label>
+                                <div class="col-sm-8">
+                                    <select id="dblType" name="type" class="form-control {required:true}">
+                                        <option value="">请选择</option>
+                                       <option value="1" ${it.type|Selected,1}>新闻类别</option>
+                                       <option value="2" ${it.type|Selected,2}>附件类型</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"> 父级</label>
+                            <div class="col-sm-8">
+                                <select id="dblParentId" name="parentId" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">层级</label>
+                            <div class="col-sm-8">
+                                <input type="text"class="form-control" name="level" value="${it.level|Default,1}" readonly="readonly"/>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="sort" class="col-sm-4 control-label">排序值</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="sort" name="sort" class="form-control {digits:true,min:1}" value="${it.sort|Default}" maxlength="3"/>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </script>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:include="share/foot::script(~{::script})">
+    <script type="text/javascript">
+        var __Data__ = {
+            Url: {
+                Get_Meta_Url: '/meta/get',
+                Save_Meta_Url: '/meta/save',
+            }
+        }
+
+    </script>
+    <script type="text/javascript" src="/static/js/meta/edit.js">
+    </script>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.TUserMapper" >
+  <resultMap id="itemMap" type="com.wilson.cms.po.TUser" >
+<!--    <id column="user_id" property="userId" jdbcType="BIGINT" />-->
+<!--    <result column="user_name" property="userName" jdbcType="VARCHAR" />-->
+<!--    <result column="password" property="password" jdbcType="VARCHAR" />-->
+<!--    <result column="mobile" property="mobile" jdbcType="VARCHAR" />-->
+<!--    <result column="email" property="email" jdbcType="VARCHAR" />-->
+<!--    <result column="status" property="status" jdbcType="SMALLINT" />-->
+<!--    <result column="user_type" property="userType" jdbcType="SMALLINT" />-->
+<!--    <result column="activate_status" property="activateStatus" jdbcType="SMALLINT" />-->
+  </resultMap>
+    <sql id="base_column_list" >
+        id,type,name,real_name,nickname,email,mobile,gender,status,activate_status,head_url,level
+  </sql>
+  <select id="queryExists" parameterType="String" resultType="com.wilson.cms.po.TUser">
+       select <include refid="base_column_list" />,password,slat
+       from user where 1=1 and status = 0 and (name=#{keyword} or mobile=#{keyword} )
+      <if test="id != null" >and id !={#id} </if>  limit 0,1
+ </select>
+
+    <sql id="example_where_clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <select id="searchUser" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
+    select
+    <include refid="base_column_list" />,birth_date
+    from user  where status &lt;= 1
+    <if test="keyword != null" >
+       and (name like "%"#{keyword} "%" or nickname like  "%"#{keyword} "%" or mobile like  "%"#{keyword} "%"   or real_name like   "%"#{keyword} "%" )
+    </if>
+     <if test="type != null" >
+       and type = #{type}
+    </if>
+    order by update_time desc
+</select>
+<insert id="add" parameterType="com.wilson.cms.po.TUser">
+    insert  into user(id,name,password,slat,nickname,create_user_id,create_time,update_time
+    <if test="activateStatus!=null">,activate_status</if>
+    <if test="level!=null">,level</if>
+    <if test="type!=null">,type</if>
+    <if test="status!=null">,status</if>
+    <if test="headUrl!=null">,head_url</if>
+    <if test="realName!=null">,real_name</if>
+    <if test="email!=null">,email</if>
+    <if test="mobile!=null">,mobile</if>
+    <if test="gender!=null">,gender</if>
+    <if test="birthDate!=null">,birth_ate</if>
+    )
+    select #{id},#{name},#{password},#{slat} ,#{nickname},#{createUserId} ,#{createTime},#{updateTime}
+    <if test="activateStatus!=null">,#{activateStatus}</if>
+    <if test="level!=null">,#{level}</if>
+    <if test="type!=null">,#{type}</if>
+    <if test="status!=null">,#{status}</if>
+    <if test="headUrl!=null">,#{headUrl}</if>
+    <if test="realName!=null">,#{realName}</if>
+    <if test="email!=null">,#{email}</if>
+    <if test="mobile!=null">,#{mobile}</if>
+    <if test="gender!=null">,#{gender}</if>
+    <if test="birthDate!=null">,#{birthDate}</if>
+
+</insert>
+    <update id="update">
+        update user set update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="name!=null">  ,name=#{name} </if>
+        <if test="password!=null">  ,password=#{password} </if>
+        <if test="slat!=null">  ,slat=#{slat}  </if>
+        <if test="nickname!=null">  ,nickname=#{nickname} </if>
+        <if test="realName!=null">  ,real_name=#{realName} </if>
+        <if test="gender!=null">  ,gender=#{gender} </if>
+        <if test="email!=null">  ,email=#{email} </if>
+        <if test="birthDate!=null">  ,birth_date=#{birthDate}  </if>
+        <if test="mobile!=null">  ,mobile=#{mobile} </if>
+        <if test="activateStatus!=null">  ,activate_status=#{activateStatus} </if>
+        <if test="level!=null">  ,level=#{level}  </if>
+        <if test="type!=null">  ,type=#{type} </if>
+        <if test="headUrl!=null">  ,head_url=#{headUrl} </if>
+        <if test="status!=null">  ,status=#{status} </if>
+        where id=#{id}
+    </update>
+    <update id="batchDelete" parameterType="java.util.List">
+        UPDATE user  SET status=2  WHERE id IN
+        <foreach collection="list" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
+</mapper>
