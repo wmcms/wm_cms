@@ -3,8 +3,8 @@ package com.wilson.cms.controller;
 import com.wilson.cms.config.Cms;
 import com.wilson.cms.po.TUser;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.UID;
-import com.wilson.cms.utils.UMD5;
+import com.wilson.cms.utils.IdUtils;
+import com.wilson.cms.utils.Md5Utils;
 import com.wilson.cms.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -26,7 +26,7 @@ public class UserController
     @Autowired
     Cms cms;
     @Autowired
-    UID uID;
+    IdUtils uID;
 
     @Autowired
     private UserService userService;
@@ -129,7 +129,7 @@ public class UserController
             System.out.println(user);
             if(user.getPassword()!=null){
                 user.setSlat(cms.getSlat());
-                user.setPassword(UMD5.Encryption(user.getPassword(),user.getSlat()));
+                user.setPassword(Md5Utils.Encryption(user.getPassword(),user.getSlat()));
             }
             userService.updateById(user);
             return  AjaxResult.Success(user.getId());
@@ -138,7 +138,7 @@ public class UserController
             //设置ID
             user.setId(uID.NewID());
             user.setSlat(cms.getSlat());
-            user.setPassword(UMD5.Encryption(user.getPassword(),user.getSlat()));
+            user.setPassword(Md5Utils.Encryption(user.getPassword(),user.getSlat()));
             userService.add(user);
             return  AjaxResult.Success(user.getId());
         }
@@ -153,11 +153,11 @@ public class UserController
     @ResponseBody
     public AjaxResult Password(PasswordArgs args) throws Exception {
         TUser orgUser = userService.getById(args.getUserId());
-        if (UMD5.Test(args.getOrigPassword(),orgUser.getSlat(),orgUser.getPassword())){
+        if (Md5Utils.Test(args.getOrigPassword(),orgUser.getSlat(),orgUser.getPassword())){
             TUser user = new TUser();
             user.setSlat(cms.getSlat());
             user.setId(args.getUserId());
-            user.setPassword(UMD5.Encryption(args.getPassword(),user.getSlat()));
+            user.setPassword(Md5Utils.Encryption(args.getPassword(),user.getSlat()));
             userService.updateById(user);
             return  AjaxResult.Success(null);
 

@@ -27,7 +27,7 @@ public class UJson {
 
 	//字符串转对象
 	public static <T> T string2Obj(String str,Class<T> clazz){
-		if (UString.isEmpty(str) || clazz == null){
+		if (StringUtils.isEmpty(str) || clazz == null){
 			return null;
 		}
 		try {

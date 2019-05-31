@@ -28,6 +28,8 @@ public class UserService implements IService<TUser>{
 
 	@Autowired
 	TUserMapper tUserMapper;
+	@Autowired
+	private IUserMapper iUserMapper;
 
 	@Autowired
 	URedis uRedis;
@@ -39,30 +41,29 @@ public class UserService implements IService<TUser>{
 	 * @param args
 	 * @return
 	 */
-	public Result login(LoginArgs args) throws Exception {
-		if(UString.isEmpty(args.getUserName())){
-			return Result.Error("用户不存在");
-		}
-		if(UString.isEmpty(args.getPassword())){
-			return Result.Error("用户名或密码不正确");
-		}
-		TUser user = tUserMapper.queryExists(null,args.getUserName());
+	public Result login(LoginParam param) throws Exception {
+
+		String loginKey=Md5Utils.Encryption(param.getLoginKey());
+		TUser user = iUserMapper.queryExists(null,loginKey);
+		boolean isVaild=param.getValidCode().equalsIgnoreCase(uRedis.get(param.getLoginKey()).toString());
 		if(user==null){
-			return Result.Error("用户不存在");
+			if(LoginMethod.password==param.getMethod())
+					return Result.Error("用户不存在");
+			if(!isVaild)
+				return Result.Error("短信验证码不正确或已过期");
 		}
-		if (UMD5.Test(args.getPassword(),user.getSlat(),user.getPassword())){
-			User loginUser= new User();
-			loginUser.setUserId(user.getId());
-			loginUser.setUserName(user.getName());
-			loginUser.setNickname(user.getNickname());
-			loginUser.setRealName(user.getRealName());
-			loginUser.setUserType(user.getType());
+		if(LoginMethod.password==param.getMethod()&&!isVaild)
+			return Result.Error("短信验证码不正确或已过期");
+		
+
+		if (Md5Utils.Test(param.getPassword(),user.getSlat(),user.getPassword())){
+
 			String token = cms.getToken().toUpperCase();
-			uRedis.set(token,loginUser);
+			uRedis.set(token,user);
 			uRedis.expire(token,8*60*60);
 			Map<String,Object> map = new HashMap<>() ;
 			map.put("token",token);
-			map.put("user",loginUser);
+			map.put("user",user);
 			return Result.Success(map);
 		}
 		return Result.Error("用户名或密码不正确");

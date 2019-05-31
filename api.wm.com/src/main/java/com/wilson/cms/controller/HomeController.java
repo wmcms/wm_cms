@@ -1,17 +1,12 @@
 package com.wilson.cms.controller;
-import com.github.pagehelper.PageInfo;
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.config.Cms;
-import com.wilson.cms.po.TUser;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.UMD5;
-import com.wilson.cms.vo.LoginType;
-import com.wilson.cms.vo.LoginVo;
-import com.wilson.cms.vo.Result;
+import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -49,14 +44,43 @@ public class HomeController {
 
 	/**
 	 * 登录API
-	 * @param type
-	 * @param loginParam
+	 * @param request
 	 * @return
 	 */
-	@PostMapping("/login/{loginway}")
-	public Result Login(@PathVariable("loginway")LoginType type, @RequestBody LoginVo loginParam){
+	@PostMapping("/login")
+	public Object Login(@RequestBody LoginParam request) throws Exception {
+		if(request.getMethod()==null)
+			request.setMethod(LoginMethod.password);
+		if(StringUtils.isEmpty(request.getLoginKey()))
+			return  Result.Error("帐号不能为空");
 
-		return  null;
+		if (request.getMethod()==LoginMethod.password){
+			if(StringUtils.isEmpty(request.getPassword()))
+				return  Result.Error("登录密码不能为空");
+		}
+		else  {
+			if(StringUtils.isEmpty(request.getValidCode()))
+				return  Result.Error("短信验证码不能为空");
+
+			if(request.getMethod()!=LoginMethod.mobile){
+
+				if(StringUtils.isEmpty(request.getOpenId()))
+					return  Result.Error("openId 不能为空");
+			}
+		}
+
+		return  userService.login(request);
+	}
+
+	/**
+	 * 登录API
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/login/{method}")
+	public Object Login(@PathVariable("method") LoginMethod method,@RequestBody LoginParam request){
+
+		return  request;
 	}
 
 	/**

@@ -10,17 +10,17 @@ import org.springframework.stereotype.Component;
 *
 */
 @Component
-public  class UID{
+public  class IdUtils {
 
 	@Autowired
-	URedis uRedis;
+	static URedis uRedis;
 	@Autowired
-    Cms cms;
-	public  Long NewID( ){
+    static Cms cms;
+	public static  <T> Long NewID(Class<T> clizz){
 //		Date date =new Date();
 //		String formatStr = new SimpleDateFormat(UConstant.STR_DATE_TIME_FORMAT).format(date);
 //		long resId = Long.parseLong(formatStr);
-		String key =new Exception().getStackTrace()[1].getClassName();
+		String key =clizz.getName();
 		Long resId = cms.initValue;
 		System.out.println(uRedis.incr(key,1));
 		return  resId+uRedis.incr(key,0);

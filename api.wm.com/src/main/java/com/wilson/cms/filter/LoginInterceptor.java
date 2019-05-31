@@ -5,9 +5,8 @@ import com.wilson.cms.annotation.Permission;
 import com.wilson.cms.vo.AjaxResult;
 import com.wilson.cms.vo.User;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.UConstant;
 import com.wilson.cms.utils.UJson;
-import com.wilson.cms.utils.UString;
+import com.wilson.cms.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor{
                     //如果没有标记了注解，则判登录
                     String token = request.getHeader("x-api-token");
 
-                    if(UString.isEmpty(token)){
+                    if(StringUtils.isEmpty(token)){
                         responseJson(response,AjaxResult.Error("请先登录"));
                         return false;
                     }
@@ -56,7 +54,7 @@ public class LoginInterceptor implements HandlerInterceptor{
                         if (permission == null) {
                             permission = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Permission.class);
                         }
-                        if (permission != null && !UString.isEmpty(permission.value())) {
+                        if (permission != null && !StringUtils.isEmpty(permission.value())) {
                             //如果标记了注解，则判断权限
                             String pv=permission.value();
                             responseJson(response,AjaxResult.Error("请先登录"));

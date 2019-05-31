@@ -5,7 +5,7 @@ package com.wilson.cms.utils;
 * @author Administrator
 *
 */
-public class UString {
+public class StringUtils {
 	/**
 	 * * 判断一个字符串是否为空串
 	 *
