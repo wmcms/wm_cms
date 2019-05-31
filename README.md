@@ -1,7 +1,6 @@
-# wm_cms
-# 深圳市闻忙科技
-# 项目目录说明
-## admin.wm.com 后台站点
+# 深圳市闻忙科技 CMS 产品说明文档
+## 目录结构说明
+### admin.wm.com 后台站点
  * 技术选型
  
     ES2015+、vue、vuex、vue-router 、vue-cli 、axios、 element-ui
@@ -10,7 +9,7 @@
  
      node4.X  git python2.X
      
-## api.wm.com  CMS系统接口
+### api.wm.com  CMS系统接口
   * 技术选型
   
       SpringBoot2.2M、SpringMvc5.x、redis、mysql、mybatis、Spring-aop
@@ -19,10 +18,10 @@
       
       jdk1.8+   maven3.x  InterlliJ IDEA2019
       
-## mat.wm.com是静态资源
-## doc为设计文档
+### mat.wm.com是静态资源
+### doc为设计文档
 
-# 部署要求
+## 部署要求
 
   * 单节点方案
   
@@ -41,4 +40,4 @@
       5. 文件服务器CDN分发（可选用阿里云存储桶）
       6. 阿里云RDS Mysql服务
 
-# 所有源码及其设计均属于深圳市闻忙科技有限公司所有，暂未开源，盗用必究
+> 所有源码及其设计均属于深圳市闻忙科技有限公司所有，暂未开源，盗用必究
