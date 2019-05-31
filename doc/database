@@ -1,0 +1,27 @@
+/*============================================================*/
+/* Table: user                                                */
+/*============================================================*/
+DROP TABLE IF EXISTS user;
+CREATE TABLE user(
+	id BIGINT PRIMARY KEY COMMENT '主键',
+	login_key CHAR(32) NOT NULL COMMENT '帐号 MD5密文不混淆',
+	password CHAR(32) NOT NULL COMMENT '密码 MD5密文混淆',
+	slat CHAR(6) NOT NULL COMMENT '加密混淆码',
+	type SMALLINT NOT NULL COMMENT '用户类型:1系统用户,2网站会员',
+	status SMALLINT NOT NULL DEFAULT 0 COMMENT'状态：-1删除，0有效，1锁定',
+	UNIQUE KEY(login_key)
+) ENGINE=INNODB;
+ALTER TABLE user COMMENT '用户主表';
+INSERT INTO user (id,login_key,password,slat,type) SELECT 18000001,MD5('13424293896'),MD5('123456#888888'),'888888',1;
+
+/*============================================================*/
+/* Table: user_open                                           */
+/*============================================================*/
+DROP TABLE IF EXISTS user_open;
+CREATE TABLE user_open(
+	id BIGINT PRIMARY KEY COMMENT '主键=user.id',
+	open_id CHAR(32) NOT NULL COMMENT 'openid MD5密文不混淆',	
+	type SMALLINT NOT NULL COMMENT 'openid类型:1微信,2新浪,3百度',
+	UNIQUE KEY(open_id)
+) ENGINE=INNODB;
+ALTER TABLE user_open COMMENT '用户第三方帐号表';
