@@ -2,9 +2,13 @@
 ## 目录结构说明
 ### admin.wm.com 后台站点
  * 技术选型
+ 
     小程序：mpvue、vuex、vue、vue-router 、vue-cli、weui、fly、babel、webpack、 ES6
-      app： react-native、redux、NativeBase（技术选型待定）
-      app：Flutter、Widgets(技术选型待定)
+    
+    app： react-native、redux、NativeBase（技术选型待定）
+    
+    app：Flutter、Widgets(技术选型待定)
+    
  * 环境要求    
  
      node4.X  git python2.X
