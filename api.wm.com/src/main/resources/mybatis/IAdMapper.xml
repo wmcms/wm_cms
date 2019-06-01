@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IAdMapper" >
+    <sql id="base_column_list" >id,login_key,password,slat,status</sql>
+  <select id="queryExists" parameterType="String" resultType="com.wilson.cms.po.UserPo">
+       select <include refid="base_column_list" />
+       from user where 1=1 and status = 0 and (login_key=#{keyword} or exists(select 0 from user_open where open_id=#{keyword} and user_id=user.id))
+      <if test="id != null" >and id !={#id} </if>  limit 0,1
+ </select>
+
+<insert id="register" parameterType="com.wilson.cms.po.UserPo">
+    insert  into user(id,login_key,password,slat,status)
+    select #{id},#{loginKey},#{password},#{slat} ,#{status}
+</insert>
+
+</mapper>

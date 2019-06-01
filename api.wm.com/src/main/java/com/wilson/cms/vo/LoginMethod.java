@@ -11,7 +11,7 @@ package com.wilson.cms.vo;
 public enum LoginMethod {
     password,
     mobile,
-    wechart,
+    weixin,
     sina,
     baidu
 }

@@ -1,7 +1,7 @@
 package com.wilson.cms.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wilson.cms.utils.UConstant;
+import com.wilson.cms.utils.Constant;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -16,8 +16,8 @@ public class UserInfoPo extends TEntity {
     private  String nickname;
     private  String realName;
     private  String slat;
-    @JsonFormat(pattern = UConstant.DATE_FORMAT)
-    @DateTimeFormat(pattern = UConstant.DATE_FORMAT)
+    @JsonFormat(pattern = Constant.DATE_FORMAT)
+    @DateTimeFormat(pattern = Constant.DATE_FORMAT)
     private Date birthDate;
     private Short activateStatus;
     private Short level;

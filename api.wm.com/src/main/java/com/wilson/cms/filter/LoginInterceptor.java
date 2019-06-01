@@ -2,10 +2,11 @@ package com.wilson.cms.filter;
 
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.annotation.Permission;
+import com.wilson.cms.po.UserPo;
 import com.wilson.cms.vo.AjaxResult;
 import com.wilson.cms.vo.User;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.UJson;
+import com.wilson.cms.utils.JsonUtils;
 import com.wilson.cms.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +45,12 @@ public class LoginInterceptor implements HandlerInterceptor{
                         return false;
                     }
                     else {
-                        User user = userService.getLoginUser(token);
+                        UserPo user = userService.getLoginUser(token);
                         if(user==null){
                             responseJson(response,AjaxResult.Error("请先登录"));
                             return false;
                         }
+                        request.setAttribute("userId",user.getId());
                         logger.debug("执行了权限认证，token="+token);
                         Permission permission = handlerMethod.getMethod().getAnnotation(Permission.class);
                         if (permission == null) {
@@ -72,7 +74,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         response.setContentType("text/html; charset=utf-8");
         try {
             writer = response.getWriter();
-            writer.print(UJson.obj2String(result));
+            writer.print(JsonUtils.obj2String(result));
 
         } catch (IOException e) {
           //  logger.error("response error",e);

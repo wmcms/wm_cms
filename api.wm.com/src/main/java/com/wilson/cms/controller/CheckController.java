@@ -18,8 +18,8 @@ public class CheckController {
     UserService userService;
     /**
      * 检查用户名是否可用
-     * @param userId
-     * @param userName
+     * @param id
+     * @param name
      * @return
      */
     @PostMapping("/username")

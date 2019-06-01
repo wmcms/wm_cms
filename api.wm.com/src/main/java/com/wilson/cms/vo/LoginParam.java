@@ -12,7 +12,8 @@ public class LoginParam  {
 
    private String loginKey;
    private  String password;
-   private  String validCode;
+   private  String imgCode;
+   private  String smsCode;
    private  String openId;
    private  LoginMethod method;
 
@@ -32,12 +33,20 @@ public class LoginParam  {
         this.password = password;
     }
 
-    public String getValidCode() {
-        return validCode;
+    public String getImgCode() {
+        return imgCode;
     }
 
-    public void setValidCode(String validCode) {
-        this.validCode = validCode;
+    public void setImgCode(String imgCode) {
+        this.imgCode = imgCode;
+    }
+
+    public String getSmsCode() {
+        return smsCode;
+    }
+
+    public void setSmsCode(String smsCode) {
+        this.smsCode = smsCode;
     }
 
     public String getOpenId() {

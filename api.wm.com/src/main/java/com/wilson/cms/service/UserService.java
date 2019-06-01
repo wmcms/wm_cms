@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wilson.cms.config.Cms;
+import com.wilson.cms.exception.NotSupportExecption;
 import com.wilson.cms.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,55 +25,60 @@ import com.github.pagehelper.PageInfo;
  *
  */
 @Service
-public class UserService implements IService<TUser>{
+public class UserService{
 
 	@Autowired
 	TUserMapper tUserMapper;
 	@Autowired
 	private IUserMapper iUserMapper;
 
-	@Autowired
-	URedis uRedis;
-
-	@Autowired
-	Cms cms;
 	/**
 	 * 用户登录
-	 * @param args
+	 * @param req
 	 * @return
 	 */
-	public Result login(LoginParam param) throws Exception {
+	public Result login(LoginParam req) throws Exception {
+		String loginKey=StringUtils.md5Encryption(req.getLoginKey());
+		UserPo user = iUserMapper.queryExists(null,loginKey);
 
-		String loginKey=Md5Utils.Encryption(param.getLoginKey());
-		TUser user = iUserMapper.queryExists(null,loginKey);
-		boolean isVaild=param.getValidCode().equalsIgnoreCase(uRedis.get(param.getLoginKey()).toString());
-		if(user==null){
-			if(LoginMethod.password==param.getMethod())
-					return Result.Error("用户不存在");
-			if(!isVaild)
-				return Result.Error("短信验证码不正确或已过期");
+			if(user==null)
+		    return Result.Error("用户不存在");
+
+		Result res = Result.Success(null);
+		switch (req.getMethod()){
+			case mobile:
+				res=mobileLogin(req);
+				break;
+            case weixin:
+                break;
+			case password:
+				res=passwordLogin(req,user);
+				break;
+				default:
+					throw new NotSupportExecption(Constant.ERROR_NOT_SUPPORT_METHOD);
 		}
-		if(LoginMethod.password==param.getMethod()&&!isVaild)
-			return Result.Error("短信验证码不正确或已过期");
-		
 
-		if (Md5Utils.Test(param.getPassword(),user.getSlat(),user.getPassword())){
-
-			String token = cms.getToken().toUpperCase();
-			uRedis.set(token,user);
-			uRedis.expire(token,8*60*60);
+		if (res.getCode()==Constant.CODE_SUCCESS){
+			String token = StringUtils.newToken();
+			RedisUtils.set(token,user);
+			RedisUtils.expire(token,8*60*60);
 			Map<String,Object> map = new HashMap<>() ;
 			map.put("token",token);
-			map.put("user",user);
 			return Result.Success(map);
 		}
+		return res;
+	}
+	Result mobileLogin(LoginParam req){
+		if(req.getSmsCode().equalsIgnoreCase(RedisUtils.get(req.getLoginKey()).toString()))
+			return  Result.Success(null);
+		return Result.Error("短信验证码不正确或已过期");
+	}
+	Result passwordLogin(LoginParam req,UserPo user) throws Exception {
+		if(StringUtils.test(req.getPassword(),user.getSlat(),user.getPassword()))
+			return  Result.Success(null);
 		return Result.Error("用户名或密码不正确");
 	}
 
-	public boolean logout(String token) {
-		uRedis.del(token);
-		return  true;
-	}
 	/**
 	 * 分页查询
 	 * @param page  分页参数
@@ -108,16 +114,14 @@ public class UserService implements IService<TUser>{
 	 * @param token
 	 * @return
 	 */
-	public  User getLoginUser(String token){
-		User user = (User) uRedis.get(token);
+	public  UserPo getLoginUser(String token){
+		UserPo user = (UserPo) RedisUtils.get(token);
 		return user;
 	}
 
-	@Override
 	public TUser getById(Long userId) {
 		return  tUserMapper.get(userId);
 	}
-	@Override
 	public void add(TUser item) {
 		tUserMapper.add(item);
 	}
@@ -137,7 +141,6 @@ public class UserService implements IService<TUser>{
 
 	}
 
-	@Override
 	public	void updateById(TUser item){
 		tUserMapper.update(item);
 	}

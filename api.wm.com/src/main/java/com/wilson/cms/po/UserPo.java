@@ -1,13 +1,8 @@
 package com.wilson.cms.po;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wilson.cms.config.Cms;
-import com.wilson.cms.utils.IdUtils;
-import com.wilson.cms.utils.UConstant;
+import com.wilson.cms.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 public class UserPo  {
 
@@ -17,12 +12,9 @@ public class UserPo  {
   private  String slat;
   private  Short status;
 
-
-@Autowired
-Cms cms;
     public UserPo() {
-        this.id = IdUtils.NewID(UserPo.class);
-        this.slat = cms.getSlat();
+        this.id = StringUtils.newLoginId(UserPo.class);
+        this.slat =StringUtils.newImgCode();
         this.status=0;
     }
 
