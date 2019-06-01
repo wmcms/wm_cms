@@ -210,7 +210,7 @@ ALTER TABLE user_vote COMMENT '用户投票';
 /*==============================================================*/
 /* Table: news                                                */
 /*==============================================================*/
-DROP TABLE IF EXISTS user_news;
+DROP TABLE IF EXISTS news;
 CREATE TABLE  news
 (
    id            			BIGINT PRIMARY KEY COMMENT '主键',

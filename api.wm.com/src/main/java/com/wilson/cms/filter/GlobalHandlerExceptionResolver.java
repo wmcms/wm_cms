@@ -1,6 +1,6 @@
 package com.wilson.cms.filter;
 
-import com.wilson.cms.utils.UJson;
+import com.wilson.cms.utils.JsonUtils;
 import com.wilson.cms.vo.Result;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -51,7 +51,7 @@ public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver 
       public static void printWrite(String msg, HttpServletResponse response) {
          try {
                  PrintWriter pw = response.getWriter();
-             pw.print(UJson.obj2String(Result.Execption(msg)));
+             pw.print(JsonUtils.obj2String(Result.Execption(msg)));
                  pw.flush();
                  pw.close();
               } catch (Exception e) {

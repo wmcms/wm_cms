@@ -1,7 +1,9 @@
 package com.wilson.cms.controller;
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.config.Cms;
+import com.wilson.cms.po.UserPo;
 import com.wilson.cms.service.UserService;
+import com.wilson.cms.utils.RedisUtils;
 import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.*;
 import org.slf4j.Logger;
@@ -29,8 +31,8 @@ public class HomeController {
 	Cms cms;
 	@GetMapping("/test")
 	public  Object Test(){
-
-		return cms.getUserType();
+System.out.println(RedisUtils.get("a"));
+		return new UserPo();
 	}
 
 	/**
@@ -40,47 +42,6 @@ public class HomeController {
 	@GetMapping("/")
 	public String Index() {
 		return "ok";
-	}
-
-	/**
-	 * 登录API
-	 * @param request
-	 * @return
-	 */
-	@PostMapping("/login")
-	public Object Login(@RequestBody LoginParam request) throws Exception {
-		if(request.getMethod()==null)
-			request.setMethod(LoginMethod.password);
-		if(StringUtils.isEmpty(request.getLoginKey()))
-			return  Result.Error("帐号不能为空");
-
-		if (request.getMethod()==LoginMethod.password){
-			if(StringUtils.isEmpty(request.getPassword()))
-				return  Result.Error("登录密码不能为空");
-		}
-		else  {
-			if(StringUtils.isEmpty(request.getValidCode()))
-				return  Result.Error("短信验证码不能为空");
-
-			if(request.getMethod()!=LoginMethod.mobile){
-
-				if(StringUtils.isEmpty(request.getOpenId()))
-					return  Result.Error("openId 不能为空");
-			}
-		}
-
-		return  userService.login(request);
-	}
-
-	/**
-	 * 登录API
-	 * @param request
-	 * @return
-	 */
-	@PostMapping("/login/{method}")
-	public Object Login(@PathVariable("method") LoginMethod method,@RequestBody LoginParam request){
-
-		return  request;
 	}
 
 	/**
