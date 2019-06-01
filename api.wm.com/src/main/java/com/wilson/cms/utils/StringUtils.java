@@ -38,4 +38,35 @@ public class StringUtils {
 	{
 		return !isNull(object);
 	}
+	
+	/**
+	 * 获取长度为 6 的随机数字
+	 * @return 随机数字
+	 * @date 修改日志：由 space 创建于 2018-8-2 下午2:43:51
+	 */
+	public static String newSmsCode() {
+		char[] result = new char[UConstant.SMS_CODE_LENGTH];
+		for (int index = 0; index < result.length; ++index) {
+			result[index] = UConstant.NUMBER_STRING.charAt(random.nextInt(UConstant.NUMBER_STRING.length()));
+		}
+		return new String(result);
+	}
+
+	/**
+	 * 获取长度为 6 的随机数字
+	 * @return 随机数字
+	 * @date 修改日志：由 space 创建于 2018-8-2 下午2:43:51
+	 */
+	public static String newImgCode() {
+		char[] result = new char[UConstant.IMG_CODE_LENGTH];
+
+		for (int index = 0; index < result.length; ++index) {
+			result[index] = UConstant.CHAR_STRING.charAt(random.nextInt(UConstant.CHAR_STRING.length()));
+		}
+		return new String(result);
+	}
+
+	public  static  String newToken() throws Exception {
+		return Md5Utils.Encryption(UUID.randomUUID().toString());
+	}
 }
