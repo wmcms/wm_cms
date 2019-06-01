@@ -4,6 +4,7 @@ import com.wilson.cms.config.Cms;
 import com.wilson.cms.po.UserPo;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.RedisUtils;
+import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,14 +62,14 @@ System.out.println(RedisUtils.get("a"));
 		return  null;
 	}
 
-    /**
-     * 登出系统
-     * @param token
-     * @return
-     */
-    @PostMapping("/logout")
-    public  Result Logout(@RequestHeader("x-api-token") String token){
-        RedisUtils.del(token);
-        return  Result.Success(null);
-    }
+	/**
+	 * 获取短信验证码
+	 * @return
+	 */
+	@PostMapping("/logout")
+	public Result Logout(@RequestAttribute("x-api-token")String token){
+
+		RedisUtils.del(token);
+		return  Result.Success(null);
+	}
 }
