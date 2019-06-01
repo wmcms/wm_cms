@@ -26,4 +26,16 @@ public class UConstant {
 	public  static  final  Integer CODE_NOLOGIN=402;
 	public  static  final  Integer CODE_NOAUTH=403;
 	public  static  final  Integer CODE_EXCEPTION=500;
+		/**
+	 * 短信验证码长度
+	 */
+	public  static  final  Integer SMS_CODE_LENGTH=6;
+
+	/**
+	 * 图片验证码长度
+	 */
+	public  static  final  Integer IMG_CODE_LENGTH=4;
+
+	public static final String NUMBER_STRING = "0123456789"; // 数字
+	public static final String CHAR_STRING = "ABCKL0123456789MNOPQRSTghiklUVXYZ0123456789abcdefmn0123456789opqrstDEFGHIuvxyx"; // 数字
 }
