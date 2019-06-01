@@ -32,6 +32,10 @@ public class UserService{
 	@Autowired
 	private IUserMapper iUserMapper;
 
+
+
+	@Autowired
+	Cms cms;
 	/**
 	 * 用户登录
 	 * @param req
@@ -73,12 +77,19 @@ public class UserService{
 			return  Result.Success(null);
 		return Result.Error("短信验证码不正确或已过期");
 	}
+
+
 	Result passwordLogin(LoginParam req,UserPo user) throws Exception {
 		if(StringUtils.test(req.getPassword(),user.getSlat(),user.getPassword()))
 			return  Result.Success(null);
 		return Result.Error("用户名或密码不正确");
 	}
 
+
+	public boolean logout(String token) {
+		RedisUtils.del(token);
+		return  true;
+	}
 	/**
 	 * 分页查询
 	 * @param page  分页参数
