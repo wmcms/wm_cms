@@ -38,28 +38,11 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/login")
-	public Result Login(@RequestBody LoginParam request) throws Exception {
+	public Result Login(LoginParam request) throws Exception {
 		if(request.getMethod()==null)
 			request.setMethod(LoginMethod.password);
-		if(StringUtils.isEmpty(request.getLoginKey()))
-			return  Result.Error("帐号不能为空");
 
-		if (request.getMethod()==LoginMethod.password){
-			if(StringUtils.isEmpty(request.getPassword()))
-				return  Result.Error("登录密码不能为空");
-		}
-		else  {
-			if(StringUtils.isEmpty(request.getSmsCode()))
-				return  Result.Error("短信验证码不能为空");
-
-			if(request.getMethod()!=LoginMethod.mobile){
-
-				if(StringUtils.isEmpty(request.getOpenId()))
-					return  Result.Error("openId 不能为空");
-			}
-		}
-
-		return  userService.login(request);
+		return  passwordLogin(request);
 	}
 
 	/**
@@ -69,7 +52,7 @@ public class LoginController {
 	 */
 	@PostMapping("/login/{method}")
 	public Result Login(@PathVariable("method") LoginMethod method
-			,@RequestBody LoginParam request) throws Exception {
+			,LoginParam request) throws Exception {
 		request.setMethod(method);
 		switch (method){
 			case mobile:
@@ -100,13 +83,31 @@ public class LoginController {
 	 * @throws Exception
 	 */
 	Result mobileLogin(LoginParam request) throws Exception {
-		if(StringUtils.isEmpty(request.getLoginKey()))
+		if(StringUtils.isEmpty(request.getMobile()))
 			return  Result.Error("手机号不能为空");
 
 		if(StringUtils.isEmpty(request.getSmsCode()))
 			return  Result.Error("短信验证码不能为空");
 
+		request.setLoginKey(request.getMobile());
+
 		return  userService.login(request);
 	}
 
+	/**
+	 * 帐号密码信登录
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	Result passwordLogin(LoginParam request) throws Exception {
+
+		if(StringUtils.isEmpty(request.getLoginKey()))
+			return  Result.Error("帐号不能为空");
+
+			if(StringUtils.isEmpty(request.getPassword()))
+				return  Result.Error("登录密码不能为空");
+
+		return  userService.login(request);
+	}
 }

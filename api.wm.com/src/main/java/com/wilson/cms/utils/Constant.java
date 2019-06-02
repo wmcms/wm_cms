@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 public class Constant {
 
 	public  static final String DATE_FORMAT="yyyy-MM-dd";
+	public  static final String TIME_ZONE="GTM+8";
 	public  static final String DATE_TIME_FORMAT="yyyy-MM-dd HH:mm:ss";
 	public  static final String STR_DATE_TIME_FORMAT="yyyyMMddHHmmss";
 	public  static final String STR_ID_DATE_TIME_FORMAT="yyMMddHHmmss";

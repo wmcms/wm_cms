@@ -26,6 +26,27 @@ public class RequestArgs  implements Serializable {
      */
     private  String keyword;
 
+
+    private  Long targetId;
+
+    private  BehaviorType behaviorType;
+
+    public BehaviorType getBehaviorType() {
+        return behaviorType;
+    }
+
+    public void setBehaviorType(BehaviorType behaviorType) {
+        this.behaviorType = behaviorType;
+    }
+
+    public Long getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(Long targetId) {
+        this.targetId = targetId;
+    }
+
     public Short getType() {
         return type;
     }

@@ -5,7 +5,7 @@ import com.wilson.cms.utils.Constant;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
-public class TUser extends TEntity {
+public class TUser extends PoBase {
 
     private String name;
     private String password;

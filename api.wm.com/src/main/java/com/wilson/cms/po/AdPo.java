@@ -1,50 +1,28 @@
 package com.wilson.cms.po;
 
-public class AdPo extends TEntity {
-    /**
-     * 分类ID
-     */
-    private  Long metaId;
-    /**
-     * 父级ID
-     */
-    private  Long parentId;
-    /**
-     * 名称
-     */
-    private  String name;
-    /**
-     * 父级路径
-     */
-    private  String parentPath;
-    /**
-     * 层级
-     */
-    private  Short level;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wilson.cms.utils.Constant;
+import java.util.Date;
 
-    /**
-     * 类型
-     */
-    private  Short type;
-    /**
-     * 值越小越靠前，值相同按修改时间倒序排列
-     */
+public class AdPo extends PoBase {
+
+    private  Long targetId;
+    private String name;
+   @JsonFormat(pattern = Constant.DATE_FORMAT,timezone = Constant.TIME_ZONE)
+   private Date beginTime;
+    @JsonFormat(pattern = Constant.DATE_FORMAT,timezone =  Constant.TIME_ZONE)
+    private Date endTime;
+    private  String url;
+    private Short type;
     private  Short sort;
+    private  Long resId;
 
-    public Long getMetaId() {
-        return metaId;
+    public Long getTargetId() {
+        return targetId;
     }
 
-    public void setMetaId(Long metaId) {
-        this.metaId = metaId;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setTargetId(Long targetId) {
+        this.targetId = targetId;
     }
 
     public String getName() {
@@ -55,20 +33,36 @@ public class AdPo extends TEntity {
         this.name = name;
     }
 
-    public String getParentPath() {
-        return parentPath;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setParentPath(String parentPath) {
-        this.parentPath = parentPath;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public Short getLevel() {
-        return level;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setLevel(Short level) {
-        this.level = level;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public Short getSort() {
@@ -78,11 +72,12 @@ public class AdPo extends TEntity {
     public void setSort(Short sort) {
         this.sort = sort;
     }
-    public Short getType() {
-        return type;
+
+    public Long getResId() {
+        return resId;
     }
 
-    public void setType(Short type) {
-        this.type = type;
+    public void setResId(Long resId) {
+        this.resId = resId;
     }
 }

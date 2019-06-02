@@ -17,6 +17,17 @@ import java.util.Date;
 
 public class ConvertBean implements  WebMvcConfigurer {
 
+    public Converter<String, Timestamp> toTimesConvert() {
+        return new Converter<String, Timestamp>() {
+            @Override
+            public Timestamp convert(String s) {
+                Timestamp sql = Timestamp.valueOf(s);
+
+                return sql;
+            }
+        };
+    }
+
     public Converter<String, Date> toTimestampConvert() {
         return new Converter<String, Date>() {
             @Override

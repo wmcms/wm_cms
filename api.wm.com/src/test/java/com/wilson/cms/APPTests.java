@@ -21,12 +21,7 @@ public class APPTests {
 	@Test
 	public void contextLoads() {
 
-		TUser user = new TUser();
-		System.out.println(user);
-		System.out.println(Timestamp.valueOf("2019-05-01"));
-		TUser tUser = userService.getById(1l);
-		//JdbcType.DATETIMEOFFSET
-		System.out.println(tUser);
+
 	}
 
 }

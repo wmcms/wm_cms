@@ -1,6 +1,6 @@
 package com.wilson.cms.po;
 
-public class NewsPo extends TEntity {
+public class NewsPo extends PoBase {
     /**
      * 分类ID
      */

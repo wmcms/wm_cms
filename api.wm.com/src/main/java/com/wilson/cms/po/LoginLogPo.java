@@ -1,88 +1,88 @@
 package com.wilson.cms.po;
 
-public class LoginLogPo extends TEntity {
-    /**
-     * 分类ID
-     */
-    private  Long metaId;
-    /**
-     * 父级ID
-     */
-    private  Long parentId;
-    /**
-     * 名称
-     */
-    private  String name;
-    /**
-     * 父级路径
-     */
-    private  String parentPath;
-    /**
-     * 层级
-     */
-    private  Short level;
+import com.sun.jmx.snmp.Timestamp;
+import com.sun.jmx.snmp.mpm.SnmpMsgTranslator;
 
-    /**
-     * 类型
-     */
-    private  Short type;
-    /**
-     * 值越小越靠前，值相同按修改时间倒序排列
-     */
-    private  Short sort;
+public class LoginLogPo {
+    private Long id;
+    private  Long userId;
+    private  String ip;
+    private String os;
+    private String device;
+    private String browser;
+    private String country;
+    private String area;
+    private Timestamp loginTime;
 
-    public Long getMetaId() {
-        return metaId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMetaId(Long metaId) {
-        this.metaId = metaId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getIp() {
+        return ip;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
-    public String getParentPath() {
-        return parentPath;
+    public String getOs() {
+        return os;
     }
 
-    public void setParentPath(String parentPath) {
-        this.parentPath = parentPath;
+    public void setOs(String os) {
+        this.os = os;
     }
 
-    public Short getLevel() {
-        return level;
+    public String getDevice() {
+        return device;
     }
 
-    public void setLevel(Short level) {
-        this.level = level;
+    public void setDevice(String device) {
+        this.device = device;
     }
 
-    public Short getSort() {
-        return sort;
+    public String getBrowser() {
+        return browser;
     }
 
-    public void setSort(Short sort) {
-        this.sort = sort;
-    }
-    public Short getType() {
-        return type;
+    public void setBrowser(String browser) {
+        this.browser = browser;
     }
 
-    public void setType(Short type) {
-        this.type = type;
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Timestamp getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Timestamp loginTime) {
+        this.loginTime = loginTime;
     }
 }

@@ -1,67 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wilson.cms.mapper.IUserInfoMapper" >
-  <resultMap id="itemMap" type="com.wilson.cms.po.TUser" >
-<!--    <id column="user_id" property="userId" jdbcType="BIGINT" />-->
-<!--    <result column="user_name" property="userName" jdbcType="VARCHAR" />-->
-<!--    <result column="password" property="password" jdbcType="VARCHAR" />-->
-<!--    <result column="mobile" property="mobile" jdbcType="VARCHAR" />-->
-<!--    <result column="email" property="email" jdbcType="VARCHAR" />-->
-<!--    <result column="status" property="status" jdbcType="SMALLINT" />-->
-<!--    <result column="user_type" property="userType" jdbcType="SMALLINT" />-->
-<!--    <result column="activate_status" property="activateStatus" jdbcType="SMALLINT" />-->
+  <resultMap id="itemMap" type="com.wilson.cms.po.UserInfoPo" >
   </resultMap>
     <sql id="base_column_list" >
         id,type,name,real_name,nickname,email,mobile,gender,status,activate_status,head_url,level
   </sql>
-  <select id="queryExists" parameterType="String" resultType="com.wilson.cms.po.TUser">
-       select <include refid="base_column_list" />,password,slat
-       from user where 1=1 and status = 0 and (name=#{keyword} or mobile=#{keyword} )
-      <if test="id != null" >and id !={#id} </if>  limit 0,1
- </select>
-
-    <sql id="example_where_clause" >
-        <where >
-            <foreach collection="oredCriteria" item="criteria" separator="or" >
-                <if test="criteria.valid" >
-                    <trim prefix="(" suffix=")" prefixOverrides="and" >
-                        <foreach collection="criteria.criteria" item="criterion" >
-                            <choose >
-                                <when test="criterion.noValue" >
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue" >
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue" >
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue" >
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-
     <select id="searchUser" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
     select
-    <include refid="base_column_list" />,birth_date
-    from user  where status &lt;= 1
+        u.id,i.type,i.name,i.nickname,i.email,i.mobile,i.gender,u.status,i.activate_status,i.head_url,i.level,i.birth_date
+    from user u left join user_info i on u.id=i.id
+      where u.status &gt;= 0
     <if test="keyword != null" >
-       and (name like "%"#{keyword} "%" or nickname like  "%"#{keyword} "%" or mobile like  "%"#{keyword} "%"   or real_name like   "%"#{keyword} "%" )
+       and (i.name like "%"#{keyword} "%" or i.nickname like  "%"#{keyword} "%" or i.mobile like  "%"#{keyword} "%" )
     </if>
      <if test="type != null" >
-       and type = #{type}
+       and i.type = #{type}
     </if>
-    order by update_time desc
+    order by i.update_time desc
 </select>
+    <select id="getUser" resultType="com.wilson.cms.po.UserInfoPo" parameterType="java.lang.Long" >
+        select
+        u.id,i.type,i.name,i.nickname,i.gender,i.activate_status,i.head_url
+        from user u left join user_info i on u.id=i.id
+        where u.id=#{id}
+    </select>
 <insert id="add" parameterType="com.wilson.cms.po.TUser">
     insert  into user(id,name,password,slat,nickname,create_user_id,create_time,update_time
     <if test="activateStatus!=null">,activate_status</if>

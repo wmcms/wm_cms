@@ -8,11 +8,12 @@ import java.time.LocalDateTime;
  * 实体基类
  * 定义所有表的公共字段
  */
-public class TEntity implements Serializable {
+public class PoBase implements Serializable {
 
-    public TEntity() {
+    public PoBase() {
         this.createTime = Timestamp.valueOf(LocalDateTime.now());
         this.updateTime=Timestamp.valueOf(LocalDateTime.now());
+        this.status=0;
     }
 
     /**

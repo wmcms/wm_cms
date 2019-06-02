@@ -28,10 +28,11 @@ import com.github.pagehelper.PageInfo;
 public class UserService{
 
 	@Autowired
-	TUserMapper tUserMapper;
-	@Autowired
 	private IUserMapper iUserMapper;
-
+	@Autowired
+	private  IUserInfoMapper iUserInfoMapper;
+	@Autowired
+	private  IUserBehaviorMapper iUserBehaviorMapper;
 
 
 	@Autowired
@@ -92,15 +93,14 @@ public class UserService{
 	}
 	/**
 	 * 分页查询
-	 * @param page  分页参数
-	 * @param username 用户名
+	 * @param args  分页参数
 	 * @return
 	 */
-	public PageResult<TUser> searchWithPageList(RequestArgs args){
+	public PageResult<UserInfoPo> search(RequestArgs args){
 		PageHelper.startPage(args.getPageIndex(),args.getPageSize());
-		List<TUser> list= tUserMapper.searchUser(args);
-		PageInfo<TUser> pageInfo = new PageInfo<TUser>(list);
-		PageResult<TUser> result = new PageResult<>();
+		List<UserInfoPo> list= iUserInfoMapper.searchUser(args);
+		PageInfo<UserInfoPo> pageInfo = new PageInfo<UserInfoPo>(list);
+		PageResult<UserInfoPo> result = new PageResult<>();
 		result.setItems(pageInfo.getList());
 		result.setTotal(pageInfo.getTotal());
 		System.out.println(result);
@@ -110,13 +110,58 @@ public class UserService{
 	}
 
 	/**
+	 * 用户行为查询
+	 * @param args
+	 * @return
+	 */
+	public  PageResult<UserBehaviorPo> searchBehavior(RequestArgs args){
+		PageHelper.startPage(args.getPageIndex(),args.getPageSize());
+		List<UserBehaviorPo> list= iUserBehaviorMapper.search(args);
+		PageInfo<UserBehaviorPo> pageInfo = new PageInfo<UserBehaviorPo>(list);
+		PageResult<UserBehaviorPo> result = new PageResult<>();
+		result.setItems(pageInfo.getList());
+		result.setTotal(pageInfo.getTotal());
+		pageInfo=null;
+		System.out.println(result);
+		return  result;
+	}
+
+	/**
+	 * 保存用户行为
+	 * @param item
+	 * @return
+	 */
+	public  Result saveBehavior(UserBehaviorPo item){
+		if (item.getBehaviorType()==null) throw new NotSupportExecption(Constant.ERROR_NOT_SUPPORT_METHOD);
+
+		switch (item.getBehaviorType()){
+			case parise:
+			case forward:
+			case collection:
+				item.setContent(null);
+				item.setIp(null);
+				break;
+			case reply:
+			case comment:
+				item.setIp(null);
+				break;
+		}
+		if (item.getId()==null){
+			item.setId(StringUtils.newLoginId(UserBehaviorPo.class));
+			iUserBehaviorMapper.add(item);
+		}
+		else{
+			iUserBehaviorMapper.update(item);
+		}
+		return  Result.Success(item.getId());
+	}
+
+	/**
 	 * 批量删除数据
 	 * @param userIds
 	 */
 	public  void  batchDelete(ArrayList<Long> userIds){
-		System.out.println("service=======");
-		System.out.println(userIds);
-		tUserMapper.batchDelete(userIds);
+
 	}
 
 
@@ -130,30 +175,41 @@ public class UserService{
 		return user;
 	}
 
-	public TUser getById(Long userId) {
-		return  tUserMapper.get(userId);
-	}
-	public void add(TUser item) {
-		tUserMapper.add(item);
+	public Result getUser(Long userId) {
+		UserInfoPo user=  iUserInfoMapper.getUser(userId);
+		if(user==null) return  Result.NoLogin("请先登录");
+
+		UserVo vo = new UserVo();
+
+		vo.setHeadUrl(user.getHeadUrl());
+		vo.setName(user.getName());
+		vo.setNickname(user.getNickname());
+		List<String> rose = new ArrayList<>();
+		if(user.getType()==1){
+			rose.add("admin");
+			vo.setRose(rose);
+		}
+		return  Result.Success(vo);
 	}
 
-	public Result exists(ExistsArgs args){
-		TUser tUser = tUserMapper.queryExists(args.getID(), args.getKeyword());
+	public Result existsMobile(String mobile){
+		UserPo user = iUserMapper.queryExists(null, mobile);
 		Map<String,Object> map = new HashMap<>() ;
-		if(tUser!=null && (ExistsType.Mobile==args.getType()||ExistsType.UserName==args.getType())) {
-			map.put("Name", args.getKeyword().equalsIgnoreCase(tUser.getName()));
-			map.put("Mobile", args.getKeyword().equalsIgnoreCase(tUser.getMobile()));
-		}
-		else{
-			map.put("Name", false);
-			map.put("Mobile", false);
-		}
+		if(user!=null )
+			map.put("mobile", true);
+		else
+			map.put("mobile", false);
 		return Result.Success(map);
 
 	}
 
-	public	void updateById(TUser item){
-		tUserMapper.update(item);
+	public	Result save(UserInfoPo item)
+	{
+		if(item.getId()==null){
+			item.setId(StringUtils.newLoginId(UserPo.class));
+			//iUserInfoMapper.add();
+		}
+		return Result.Success(item.getId());
 	}
 
 }

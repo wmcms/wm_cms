@@ -2,7 +2,10 @@ package com.wilson.cms.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.util.Converter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +14,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 /**
@@ -67,4 +72,39 @@ public class CmsBean {
         template.afterPropertiesSet();
         return template;
     }
+
+    @Bean
+    public Converter<String, Timestamp> stringDateConvert() {
+        return new Converter<String, Timestamp>() {
+            @Override
+            public Timestamp convert(String source) {
+                //yyyy-MM-dd HH:mm:ss日期字符串转换为Date类型
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Timestamp date = null;
+                try {
+                    date = Timestamp.valueOf(source);
+                } catch (Exception e) {
+                    //yyyy-MM-dd日期字符串转换为Date类型
+                    sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        date = Timestamp.valueOf(source);
+                    } catch (Exception e1) {
+                        throw  e1;
+                    }
+                }
+                return date;
+            }
+
+            @Override
+            public JavaType getInputType(TypeFactory typeFactory) {
+                return null;
+            }
+
+            @Override
+            public JavaType getOutputType(TypeFactory typeFactory) {
+                return null;
+            }
+        };
+    }
+
 }

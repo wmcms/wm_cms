@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IUserBehaviorMapper" >
+    <resultMap id="itemMap" type="com.wilson.cms.po.UserBehaviorPo" ></resultMap>
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
+        select *  from  user_${behaviorType} where status &gt;= 0
+        <if test="targetId != null" >
+            and target_id=#{targetId}
+        </if>
+        order by create_time desc
+    </select>
+    <insert id="add" parameterType="com.wilson.cms.po.UserBehaviorPo">
+        insert into user_${behaviorType}(id, target_id, user_id,create_time
+            <if test="content!=null">,content</if>
+            <if test="ip!=null">,ip</if>
+        )
+        select #{id},#{targetId} ,#{userId},#{createTime}
+        <if test="content!=null">,#{content}</if>
+        <if test="ip!=null">,#{ip}</if>
+    </insert>
+    <update id="update" parameterType="com.wilson.cms.po.UserBehaviorPo">
+        update user_${behaviorType} set update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="content!=null">,content=#{content}</if>
+        <if test="status!=null">,status=#{status}</if>
+        where id=#{id}
+    </update>
+</mapper>

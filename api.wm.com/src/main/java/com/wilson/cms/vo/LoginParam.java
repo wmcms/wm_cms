@@ -16,6 +16,15 @@ public class LoginParam  {
    private  String smsCode;
    private  String openId;
    private  LoginMethod method;
+   private  String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getLoginKey() {
         return loginKey;

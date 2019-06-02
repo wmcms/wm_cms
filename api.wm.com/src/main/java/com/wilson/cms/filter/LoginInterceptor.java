@@ -4,7 +4,6 @@ import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.annotation.Permission;
 import com.wilson.cms.po.UserPo;
 import com.wilson.cms.vo.AjaxResult;
-import com.wilson.cms.vo.User;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.JsonUtils;
 import com.wilson.cms.utils.StringUtils;

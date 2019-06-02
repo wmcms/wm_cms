@@ -1,6 +1,6 @@
 package com.wilson.cms.po;
 
-public class TMeta extends TEntity {
+public class TMeta extends PoBase {
     /**
      * 分类ID
      */

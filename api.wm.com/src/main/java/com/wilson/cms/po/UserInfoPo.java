@@ -2,35 +2,25 @@ package com.wilson.cms.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wilson.cms.utils.Constant;
+import javafx.scene.chart.Chart;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class UserInfoPo extends TEntity {
+public class UserInfoPo extends PoBase {
 
     private String name;
-    private String password;
-    private  String mobile;
-    private  String email;
-    private char gender;
-    private  String nickname;
-    private  String realName;
-    private  String slat;
-    @JsonFormat(pattern = Constant.DATE_FORMAT)
-    @DateTimeFormat(pattern = Constant.DATE_FORMAT)
+    private String nickname;
+    private String headUrl;
+    private Chart gender;
+    private String email;
+    private String idCardNo;
+    private String mobile;
     private Date birthDate;
     private Short activateStatus;
     private Short level;
     private Short type;
-    private  String headUrl;
 
-    public String getHeadUrl() {
-        return headUrl;
-    }
-
-    public void setHeadUrl(String headUrl) {
-        this.headUrl = headUrl;
-    }
 
     public String getName() {
         return name;
@@ -38,38 +28,6 @@ public class UserInfoPo extends TEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public char getGender() {
-        return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
     }
 
     public String getNickname() {
@@ -80,20 +38,44 @@ public class UserInfoPo extends TEntity {
         this.nickname = nickname;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getHeadUrl() {
+        return headUrl;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
     }
 
-    public String getSlat() {
-        return slat;
+    public Chart getGender() {
+        return gender;
     }
 
-    public void setSlat(String slat) {
-        this.slat = slat;
+    public void setGender(Chart gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public Date getBirthDate() {
@@ -126,29 +108,5 @@ public class UserInfoPo extends TEntity {
 
     public void setType(Short type) {
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "TUser{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", email='" + email + '\'' +
-                ", gender=" + gender +
-                ", nickname='" + nickname + '\'' +
-                ", realName='" + realName + '\'' +
-                ", slat='" + slat + '\'' +
-                ", birthDate=" + birthDate +
-                ", activateStatus=" + activateStatus +
-                ", level=" + level +
-                ", type=" + type +
-                ", id=" + id +
-                ", createTime=" + createTime +
-                ", createUserId=" + createUserId +
-                ", updateTime=" + updateTime +
-                ", updateUserId=" + updateUserId +
-                ", status=" + status +
-                '}';
     }
 }
