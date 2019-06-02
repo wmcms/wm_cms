@@ -85,7 +85,7 @@ public class UserController
         return result;
     }
     @PostMapping("/save")
-    public Result save(@RequestAttribute Long userId,UserInfoPo item){
+    public Result save(@RequestAttribute Long userId,UserInfoPo item) throws Exception {
         item.setCreateUserId(userId);
         item.setUpdateUserId(userId);
         return Result.Success(userService.save(item));

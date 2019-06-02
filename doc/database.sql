@@ -20,8 +20,8 @@ DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info
 (
 		id            			BIGINT PRIMARY KEY COMMENT '用户ID',
-		name          			VARCHAR(20) NOT NULL COMMENT '姓名',
-		nickname          	    VARCHAR(20) COMMENT '昵称',
+		name          			VARCHAR(20) NULL COMMENT '姓名',
+		nickname          	VARCHAR(20) NOT NULL COMMENT '昵称',
 		head_url			    VARCHAR(100) COMMENT '用户头像',
 		gender             	    CHAR(1) COMMENT '性别',
 		email              	    VARCHAR(50) COMMENT '电子邮箱',
@@ -215,7 +215,7 @@ CREATE TABLE  news
    id            			BIGINT PRIMARY KEY COMMENT '主键',
    category_id    		BIGINT NOT NULL COMMENT '类别Id=meta.id',
    title     	 				VARCHAR(150) NOT NULL COMMENT '标题',
-   cover_url     	 		VARCHAR(150) NOT NULL COMMENT '封面',
+   cover_id     	 		BIGINT  NULL COMMENT '封面',
    keyword     	 			VARCHAR(100)  COMMENT '关键字',
    description     	 	VARCHAR(200)  COMMENT '描述',
    source     	 				VARCHAR(100)  COMMENT '来源',
@@ -327,11 +327,11 @@ DROP TABLE IF EXISTS news_reptor;
 CREATE TABLE  news_reptor
 (
    id            			BIGINT PRIMARY KEY COMMENT '主键=news.id',
-   visit_count     	  INT NOT NULL  COMMENT '访问次数',
-   comment_count     	  INT NOT NULL  COMMENT '评论次数',
-   praise_count     	  INT NOT NULL  COMMENT '点赞次数',
-   collection_count     	  INT NOT NULL  COMMENT '收藏次数',
-   forward_count     	  INT NOT NULL  COMMENT '转发次数'
+   visit_count     	  INT NOT NULL DEFAULT 0 COMMENT '访问次数',
+   comment_count     	  INT NOT NULL DEFAULT 0  COMMENT '评论次数',
+   praise_count     	  INT NOT NULL DEFAULT 0  COMMENT '点赞次数',
+   collection_count     	  INT NOT NULL DEFAULT 0  COMMENT '收藏次数',
+   forward_count     	  INT NOT NULL DEFAULT 0 COMMENT '转发次数'
    
 )ENGINE = INNODB;
 ALTER TABLE news_reptor COMMENT '文章报表';

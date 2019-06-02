@@ -16,6 +16,7 @@ import com.wilson.cms.mapper.*;
 import com.wilson.cms.po.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 系统用户
@@ -34,6 +35,8 @@ public class UserService{
 	@Autowired
 	private  IUserBehaviorMapper iUserBehaviorMapper;
 
+	@Autowired
+	private  INewsReportMapper iNewsReportMapper;
 
 	@Autowired
 	Cms cms;
@@ -78,21 +81,14 @@ public class UserService{
 			return  Result.Success(null);
 		return Result.Error("短信验证码不正确或已过期");
 	}
-
-
 	Result passwordLogin(LoginParam req,UserPo user) throws Exception {
 		if(StringUtils.test(req.getPassword(),user.getSlat(),user.getPassword()))
 			return  Result.Success(null);
 		return Result.Error("用户名或密码不正确");
 	}
 
-
-	public boolean logout(String token) {
-		RedisUtils.del(token);
-		return  true;
-	}
 	/**
-	 * 分页查询
+	 * 用户查询
 	 * @param args  分页参数
 	 * @return
 	 */
@@ -131,6 +127,7 @@ public class UserService{
 	 * @param item
 	 * @return
 	 */
+	@Transactional
 	public  Result saveBehavior(UserBehaviorPo item){
 		if (item.getBehaviorType()==null) throw new NotSupportExecption(Constant.ERROR_NOT_SUPPORT_METHOD);
 
@@ -153,28 +150,28 @@ public class UserService{
 		else{
 			iUserBehaviorMapper.update(item);
 		}
+		switch (item.getBehaviorType()){
+			case parise:
+			case forward:
+			case collection:
+			case comment:
+				Map<String,Object> map = new HashMap<>();
+				map.put("id",item.getId());
+				map.put("key",item.getBehaviorType()+"_count");
+				iNewsReportMapper.save(map);
+				break;
+		}
+
 		return  Result.Success(item.getId());
 	}
 
-	/**
-	 * 批量删除数据
-	 * @param userIds
-	 */
-	public  void  batchDelete(ArrayList<Long> userIds){
-
-	}
 
 
 	/**
-	 * 获取登录的用户信息
-	 * @param token
+	 * 获取登录用户信息用于权限认证
+	 * @param userId
 	 * @return
 	 */
-	public  UserPo getLoginUser(String token){
-		UserPo user = (UserPo) RedisUtils.get(token);
-		return user;
-	}
-
 	public Result getUser(Long userId) {
 		UserInfoPo user=  iUserInfoMapper.getUser(userId);
 		if(user==null) return  Result.NoLogin("请先登录");
@@ -192,6 +189,19 @@ public class UserService{
 		return  Result.Success(vo);
 	}
 
+	/**
+	 * 批量删除数据
+	 * @param userIds
+	 */
+	public  void  batchDelete(ArrayList<Long> userIds){
+
+	}
+
+	/**
+	 * 检查手机号是否重复
+	 * @param mobile
+	 * @return
+	 */
 	public Result existsMobile(String mobile){
 		UserPo user = iUserMapper.queryExists(null, mobile);
 		Map<String,Object> map = new HashMap<>() ;
@@ -203,13 +213,42 @@ public class UserService{
 
 	}
 
-	public	Result save(UserInfoPo item)
-	{
+	/**
+	 * 保存用户信息
+	 * @param item
+	 * @return
+	 */
+	@Transactional
+	public	Result save(UserInfoPo item) throws Exception {
 		if(item.getId()==null){
+			//step 1 注册帐号
 			item.setId(StringUtils.newLoginId(UserPo.class));
-			//iUserInfoMapper.add();
+			if(StringUtils.isEmpty(item.getMobile())) return  Result.Error("手机号不能为空");
+			if(StringUtils.isEmpty(item.getPassword())) return  Result.Error("密码不能空");
+			UserPo  user = new UserPo();
+			user.setId(item.getId());
+			user.setLoginKey(StringUtils.md5Encryption(item.getMobile()));
+			user.setSlat(StringUtils.newImgCode());
+			user.setPassword(StringUtils.md5Encryption(user.getPassword(),user.getSlat()));
+			iUserMapper.register(user);
+
+			if(StringUtils.isEmpty(item.getNickname())) item.setNickname("WM_"+item.getMobile());
+			//step 2 保存用户信息
+			iUserInfoMapper.add(item);
+		}
+		else{
+			iUserInfoMapper.update(item);
 		}
 		return Result.Success(item.getId());
 	}
 
+	/**
+	 * 修改状态
+	 * @param item
+	 * @return
+	 */
+	public  Result updateStatus(UserPo item){
+		iUserMapper.updateStatus(item);
+		return  Result.Success(item);
+	}
 }

@@ -3,6 +3,7 @@ package com.wilson.cms.filter;
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.annotation.Permission;
 import com.wilson.cms.po.UserPo;
+import com.wilson.cms.utils.RedisUtils;
 import com.wilson.cms.vo.AjaxResult;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.JsonUtils;
@@ -44,7 +45,7 @@ public class LoginInterceptor implements HandlerInterceptor{
                         return false;
                     }
                     else {
-                        UserPo user = userService.getLoginUser(token);
+                        UserPo user = (UserPo) RedisUtils.get(token);
                         if(user==null){
                             responseJson(response,AjaxResult.Error("请先登录"));
                             return false;

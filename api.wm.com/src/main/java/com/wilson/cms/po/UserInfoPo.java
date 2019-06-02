@@ -12,7 +12,7 @@ public class UserInfoPo extends PoBase {
     private String name;
     private String nickname;
     private String headUrl;
-    private Chart gender;
+    private char gender;
     private String email;
     private String idCardNo;
     private String mobile;
@@ -20,7 +20,7 @@ public class UserInfoPo extends PoBase {
     private Short activateStatus;
     private Short level;
     private Short type;
-
+    private  String password;
 
     public String getName() {
         return name;
@@ -46,11 +46,11 @@ public class UserInfoPo extends PoBase {
         this.headUrl = headUrl;
     }
 
-    public Chart getGender() {
+    public char getGender() {
         return gender;
     }
 
-    public void setGender(Chart gender) {
+    public void setGender(char gender) {
         this.gender = gender;
     }
 
@@ -108,5 +108,13 @@ public class UserInfoPo extends PoBase {
 
     public void setType(Short type) {
         this.type = type;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

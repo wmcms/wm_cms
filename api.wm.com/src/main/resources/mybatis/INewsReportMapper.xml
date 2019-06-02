@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.INewsReportMapper">
+    <insert id="save" parameterType="java.util.Map">
+        insert into news_reptor (id,${key})  values(#{id},1) on  DUPLICATE key update ${key}=${key}+values(${key})
+    </insert>
+</mapper>

@@ -1,5 +1,6 @@
 package com.wilson.cms.mapper;
 import com.wilson.cms.po.UserPo;
+import org.apache.ibatis.annotations.Update;
 
 public interface IUserMapper {
     /**
@@ -16,5 +17,8 @@ public interface IUserMapper {
      * @param user
      */
     void register(UserPo user);
+
+    @Update("update user set status=#{user.status} where id=#{user.id}")
+    void updateStatus(UserPo user);
 
 }

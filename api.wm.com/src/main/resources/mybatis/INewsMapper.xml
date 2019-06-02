@@ -1,16 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wilson.cms.mapper.INewsMapper" >
-    <sql id="base_column_list" >id,login_key,password,slat,status</sql>
-  <select id="queryExists" parameterType="String" resultType="com.wilson.cms.po.UserPo">
-       select <include refid="base_column_list" />
-       from user where 1=1 and status = 0 and (login_key=#{keyword} or exists(select 0 from user_open where open_id=#{keyword} and user_id=user.id))
-      <if test="id != null" >and id !={#id} </if>  limit 0,1
- </select>
+    <resultMap id="itemMap" type="com.wilson.cms.po.NewsPo" >
+    </resultMap>
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
+        select
+        n.id,n.title,n.category_id,c.name as category_name,n.cover_id,m.url cover_url
+        from news n left join material m on n.cover_id=m.id
+        left join  meta c on c.id=n.category_id
+        where 1=1   n.status &gt;= 0
+        <if test="status != null" >
+        and  n.status =#{status}
+        </if>
+        <if test="keyword != null" >
+            and (n.title like "%"#{keyword} "%" or n.keyword like  "%"#{keyword} "%"  or n.author like  "%"#{keyword} "%"  )
+        </if>
+        <if test="categoryId != null" >
+            and n.category_id = #{categoryId}
+        </if>
+        order by n.is_top desc,n.sort ,n.update_time desc
+    </select>
+    <select id="get" resultType="com.wilson.cms.po.NewsPo" parameterType="java.lang.Long" >
+          select n.*,c.name as category_name ,m.url as cover_url ,d.text as content
+        from news n left join material m on n.cover_id=m.id
+        left join  meta c on c.id=n.category_id
+        left join news_content d on d.id=n.id
+        where n.id=#{id}
+    </select>
 
-<insert id="register" parameterType="com.wilson.cms.po.UserPo">
-    insert  into user(id,login_key,password,slat,status)
-    select #{id},#{loginKey},#{password},#{slat} ,#{status}
-</insert>
+    <insert id="add" parameterType="com.wilson.cms.po.NewsPo">
+        insert  into news(id,title,create_user_id,create_time
+            <if test="publishTime!=null">,publish_time</if>
+            <if test="offlineTime!=null">,offline_time</if>
+            <if test="isAutoPublish">,is_auto_publish</if>
+            <if test="isAutoOffline">,is_auto_offline</if>
+            <if test="isTop">,is_top</if>
+            <if test="isHot">,is_hot</if>
+            <if test="isRecommend">,is_recommend</if>
+            <if test="sort!=null">,sort</if>
+            <if test="keyword!=null">,keyword</if>
+            <if test="description!=null">,description</if>
+            <if test="sourceUrl!=null">,source_url</if>
+            <if test="source!=null">,source</if>
+            <if test="author!=null">,author</if>
+            <if test="categoryId!=null">,category_id</if>
+            <if test="coverId!=null">,cover_id</if>
+            <if test="status!=null">,status</if>
+        )
+        select #{id},#{title} ,#{createUserId} ,#{createTime}
+        <if test="publishTime!=null">,#{publishTime}</if>
+        <if test="offlineTime!=null">,#{offlineTime}</if>
+        <if test="isAutoPublish">,#{isAutoPublish}</if>
+        <if test="isAutoOffline">,#{isAutoOffline}</if>
+        <if test="isTop">,#{isTop}</if>
+        <if test="isHot">,#{isHot}</if>
+        <if test="isRecommend">,#{isRecommend}</if>
+        <if test="sort!=null">,#{sort}</if>
+        <if test="keyword!=null">,#{keyword}</if>
+        <if test="description!=null">,#{description}</if>
+        <if test="sourceUrl!=null">,#{sourceUrl}</if>
+        <if test="source!=null">,#{source}</if>
+        <if test="author!=null">,#{author}</if>
+        <if test="categoryId!=null">,#{categoryId}</if>
+        <if test="coverId!=null">,#{coverId}</if>
+        <if test="status!=null">,#{status}</if>
+    </insert>
+    <update id="update" parameterType="com.wilson.cms.po.NewsPo">
+        update news set title=#{title},update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="publishTime!=null">,publish_time=#{publishTime}</if>
+        <if test="offlineTime!=null">,offline_time=#{offlineTime}</if>
+        <if test="isAutoPublish">,is_auto_publish=#{isAutoPublish}</if>
+        <if test="isAutoOffline">,is_auto_offline=#{isAutoOffline}</if>
+        <if test="isTop">,is_top=#{isTop}</if>
+        <if test="isHot">,is_hot=#{isHot}</if>
+        <if test="isRecommend">,is_recommend=#{isRecommend}</if>
+        <if test="sort!=null">,sort=#{sort}</if>
+        <if test="keyword!=null">,keyword=#{keyword}</if>
+        <if test="description!=null">,description=#{description}</if>
+        <if test="sourceUrl!=null">,source_url=#{sourceUrl}</if>
+        <if test="source!=null">,source=#{source}</if>
+        <if test="author!=null">,author=#{author}</if>
+        <if test="categoryId!=null">,category_id=#{categoryId}</if>
+        <if test="coverId!=null">,cover_id=#{coverId}</if>
+        <if test="status!=null">,status=#{status}</if>
+        where id=#{id}
+    </update>
 
 </mapper>
