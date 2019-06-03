@@ -3,43 +3,30 @@
 <mapper namespace="com.wilson.cms.mapper.IMaterialMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.MaterialPo" >
     </resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
-        select id,category_id,name,file_name,file_type,file_size,url,create_time
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+        select id,meta_id,name,file_name,file_type,file_size,url,create_time
         from material  where status = 0
         <if test="keyword != null" >
             and (name like "%"#{keyword} "%" )
         </if>
-        <if test="categoryId != null" >
-            and category_id = #{categoryId}
+        <if test="metaId != null" >
+            and meta_d = #{metaId}
         </if>
-        order by update_time desc
-
-        id            			BIGINT PRIMARY KEY COMMENT '主键',
-        category_id    		BIGINT NOT NULL COMMENT '类别Id=meta.id',
-        name     	 				VARCHAR(50) NOT NULL COMMENT '名称',
-        file_name     	 			VARCHAR(100)  COMMENT '文件名',
-        file_type     	 			VARCHAR(20)  COMMENT '文件类型',
-        file_szie    		BIGINT NOT NULL COMMENT '文件大小',
-        url     	 			VARCHAR(100)  COMMENT 'url',
-        status             	    SMALLINT NOT NULL DEFAULT 0 COMMENT '状态(-1删除，0正常)',
-        create_time				TIMESTAMP NOT NULL  COMMENT '创建时间',
-        create_user_id			BIGINT COMMENT '创建人'
+        order by create_time desc
     </select>
 
     <insert id="add" parameterType="com.wilson.cms.po.MaterialPo">
-        insert  into material(id,name,category_id,create_user_id,create_time
+        insert  into material(id,name,meta_id,create_user_id,create_time
             <if test="fileName!=null">,file_name</if>
             <if test="fileType!=null">,file_type</if>
-            <if test="fileSize!=null">,file_szie</if>
+            <if test="fileSize!=null">,file_size</if>
             <if test="url!=null">,url</if>
-            <if test="status!=null">,status</if>
         )
-        select #{id},#{title} ,#{createUserId} ,#{createTime}
+        select #{id},#{name} ,#{metaId},#{createUserId} ,#{createTime}
         <if test="fileName!=null">,#{fileName}</if>
         <if test="fileType!=null">,#{fileType}</if>
-        <if test="fileSize!=null">,{fileSize}</if>
+        <if test="fileSize!=null">,#{fileSize}</if>
         <if test="url!=null">,#{url}</if>
-        <if test="status!=null">,#{status}</if>
     </insert>
 
 </mapper>

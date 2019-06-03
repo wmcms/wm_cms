@@ -1,7 +1,7 @@
 package com.wilson.cms.mapper;
 
 import com.wilson.cms.po.UserPo;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.po.TUser;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface TUserMapper {
      * @param args 查询参数
      * @return 用户列表
      */
-    List<UserPo> searchUser(RequestArgs args);
+    List<UserPo> searchUser(RequestParam args);
 
     /**
      * 更新用户

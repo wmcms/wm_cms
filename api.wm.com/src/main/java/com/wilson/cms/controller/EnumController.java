@@ -3,15 +3,13 @@ package com.wilson.cms.controller;
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.config.Cms;
 import com.wilson.cms.exception.NotSupportExecption;
-import com.wilson.cms.vo.EnumType;
+import com.wilson.cms.vo.DataType;
 import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.management.NotificationFilterSupport;
 
 /**
  * @ClassName EnumController
@@ -28,7 +26,7 @@ public class EnumController {
     @Autowired
     Cms cms;
     @GetMapping("/{type}")
-    public Result Index(@PathVariable("type")EnumType type){
+    public Result Index(@PathVariable("type") DataType type){
         switch (type){
             case usertype:
                 return  Result.Success(cms.getUserType());

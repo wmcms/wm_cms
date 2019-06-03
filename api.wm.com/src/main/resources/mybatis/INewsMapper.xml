@@ -3,11 +3,9 @@
 <mapper namespace="com.wilson.cms.mapper.INewsMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.NewsPo" >
     </resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
-        select
-        n.id,n.title,n.category_id,c.name as category_name,n.cover_id,m.url cover_url
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+        select  n.id,n.title,n.meta_id,n.cover_id,m.url cover_url
         from news n left join material m on n.cover_id=m.id
-        left join  meta c on c.id=n.category_id
         where 1=1   n.status &gt;= 0
         <if test="status != null" >
         and  n.status =#{status}
@@ -15,15 +13,14 @@
         <if test="keyword != null" >
             and (n.title like "%"#{keyword} "%" or n.keyword like  "%"#{keyword} "%"  or n.author like  "%"#{keyword} "%"  )
         </if>
-        <if test="categoryId != null" >
-            and n.category_id = #{categoryId}
+        <if test="metaId != null" >
+            and n.meta_id = #{metaId}
         </if>
         order by n.is_top desc,n.sort ,n.update_time desc
     </select>
     <select id="get" resultType="com.wilson.cms.po.NewsPo" parameterType="java.lang.Long" >
-          select n.*,c.name as category_name ,m.url as cover_url ,d.text as content
+          select n.* ,m.url as cover_url ,d.text as content
         from news n left join material m on n.cover_id=m.id
-        left join  meta c on c.id=n.category_id
         left join news_content d on d.id=n.id
         where n.id=#{id}
     </select>
@@ -43,7 +40,7 @@
             <if test="sourceUrl!=null">,source_url</if>
             <if test="source!=null">,source</if>
             <if test="author!=null">,author</if>
-            <if test="categoryId!=null">,category_id</if>
+            <if test="metaId!=null">,meta_id</if>
             <if test="coverId!=null">,cover_id</if>
             <if test="status!=null">,status</if>
         )
@@ -61,7 +58,7 @@
         <if test="sourceUrl!=null">,#{sourceUrl}</if>
         <if test="source!=null">,#{source}</if>
         <if test="author!=null">,#{author}</if>
-        <if test="categoryId!=null">,#{categoryId}</if>
+        <if test="metaId!=null">,#{metaId}</if>
         <if test="coverId!=null">,#{coverId}</if>
         <if test="status!=null">,#{status}</if>
     </insert>
@@ -80,7 +77,7 @@
         <if test="sourceUrl!=null">,source_url=#{sourceUrl}</if>
         <if test="source!=null">,source=#{source}</if>
         <if test="author!=null">,author=#{author}</if>
-        <if test="categoryId!=null">,category_id=#{categoryId}</if>
+        <if test="metaId!=null">,meta_id=#{metaId}</if>
         <if test="coverId!=null">,cover_id=#{coverId}</if>
         <if test="status!=null">,status=#{status}</if>
         where id=#{id}

@@ -6,7 +6,7 @@ import com.wilson.cms.mapper.IAdMapper;
 import com.wilson.cms.po.AdPo;
 import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class AdService {
     @Autowired
     IAdMapper iAdMapper;
 
-    public PageResult<AdPo> searchWithPageList(RequestArgs args){
+    public PageResult<AdPo> searchWithPageList(RequestParam args){
         PageHelper.startPage(args.getPageIndex(),args.getPageSize());
         List<AdPo> list= iAdMapper.search(args);
         PageInfo<AdPo> pageInfo = new PageInfo<AdPo>(list);

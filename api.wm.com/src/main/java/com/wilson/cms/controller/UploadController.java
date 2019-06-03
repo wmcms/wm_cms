@@ -1,7 +1,7 @@
 package com.wilson.cms.controller;
 
 import com.wilson.cms.vo.Result;
-import com.wilson.cms.vo.UploadType;
+import com.wilson.cms.vo.UploadMethod;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class UploadController {
 
-    private UploadType type;
+    private UploadMethod type;
     private MultipartFile[] files;
 
     /**
@@ -26,7 +26,7 @@ public class UploadController {
      * @return
      */
     @PostMapping("/upload/{type}")
-    public Result Index(@PathVariable("type")UploadType type, @RequestParam("file") MultipartFile[] files){
+    public Result Index(@PathVariable("type") UploadMethod type, @RequestParam("file") MultipartFile[] files){
         this.type = type;
         this.files = files;
         switch (type){

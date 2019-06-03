@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IMetaMapper" >
+    <resultMap id="itemMap" type="com.wilson.cms.po.MetaPo" >
+    </resultMap>
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+        select a.id,a.parent_id,a.name,a.type,a.parent_path,a.remark,a.sort,a.level,b.name as parent_name
+        from meta a left join meta b on a.parent_id=b.id where a.status = 0
+        <if test="keyword != null" >
+            and (a.name like "%"#{keyword} "%" )
+        </if>
+        <if test="type != null" >
+            and a.type = #{type}
+        </if>
+        order by a.level,a.sort,a.update_time desc
+
+    </select>
+    <insert id="add" parameterType="com.wilson.cms.po.MetaPo">
+        insert  into meta(id,name,type,create_user_id,create_time
+            <if test="parentId!=null">,parent_id</if>
+            <if test="parentPath!=null">,parent_path</if>
+            <if test="remark!=null">,remark</if>
+            <if test="level!=null">,level</if>
+            <if test="sort!=null">,sort</if>
+        )
+        select #{id},#{name},#{type} ,#{createUserId} ,#{createTime}
+        <if test="parentId!=null">,#{parentId}</if>
+        <if test="parentPath!=null">,#{parentPath}</if>
+        <if test="remark!=null">,#{remark}</if>
+        <if test="level!=null">,#{level}</if>
+        <if test="sort!=null">,#{sort}</if>
+    </insert>
+    <update id="update" parameterType="com.wilson.cms.po.MetaPo">
+       update meta set update_user_id=#{updateUserId},update_time=#{updateTime}
+        <if test="name!=null">,name=#{name}</if>
+        <if test="type!=null">,type=#{type}</if>
+        <if test="parentId!=null">,parent_id=#{parentId}</if>
+        <if test="parentPath!=null">,parent_path=#{parentPath}</if>
+        <if test="remark!=null">,type=#{remark}</if>
+        <if test="level!=null">,type=#{level}</if>
+        <if test="sort!=null">,type=#{sort}</if>
+        <if test="status!=null">,type=#{status}</if>
+    </update>
+</mapper>

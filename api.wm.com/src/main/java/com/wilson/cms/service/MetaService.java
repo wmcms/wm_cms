@@ -2,10 +2,12 @@ package com.wilson.cms.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wilson.cms.mapper.*;
-import com.wilson.cms.po.*;
-import com.wilson.cms.vo.Meta;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.mapper.IMetaMapper;
+import com.wilson.cms.po.MetaPo;
+import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.PageResult;
+import com.wilson.cms.vo.RequestParam;
+import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,52 +15,54 @@ import java.util.List;
 
 
 @Service
-public class MetaService implements IService<TMeta>{
+public class MetaService {
 
 	@Autowired
     IMetaMapper iMetaMapper;
 
 	/**
 	 * 分页查询
-	 * @param page  分页参数
-	 * @param username 用户名
+	 * @param args  分页参数
 	 * @return
 	 */
-	public PageInfo<Meta> searchWithPageList(RequestArgs args){
+	public PageResult<MetaPo> search(RequestParam args){
 		PageHelper.startPage(args.getPageIndex(),args.getPageSize());
-		List<Meta> list= iMetaMapper.searchMeta(args);
-		System.out.println(list);
-		PageInfo<Meta> pageInfo = new PageInfo<Meta>(list);
-		return  pageInfo;
+		List<MetaPo> list= iMetaMapper.search(args);
+		PageInfo<MetaPo> pageInfo = new PageInfo<MetaPo>(list);
+		PageResult<MetaPo> result = new PageResult<>();
+		result.setItems(pageInfo.getList());
+		result.setTotal(pageInfo.getTotal());
+		pageInfo=null;
+		return  result;
 	}
 
 	/**
-	 * 批量删除数据
-	 * @param ids
+	 * 所取所有基础数据
+	 * @return
 	 */
-	public  void  batchDelete(List<Long> ids){
-		iMetaMapper.batchDelete(ids);
-	}
-
-	public List<TMeta> getAllMeta(){
-		List<TMeta> list= iMetaMapper.getAllMeta();
+	public List<MetaPo> getAll(){
+		List<MetaPo> list= iMetaMapper.search(new RequestParam());
 		return  list;
 	}
 
-
-	@Override
-	public TMeta getById(Long metaId) {
-		return  iMetaMapper.getById(metaId);
+	/**
+	 * 保存基础数据
+	 * @param item
+	 * @return
+	 */
+	public Result save(MetaPo item) {
+		if (null == item.getId()) {
+			item.setId(StringUtils.newLoginId(MetaPo.class));
+			if (null != item.getParentId()) {
+				item.setParentPath(StringUtils.isEmpty(item.getParentPath()) ? item.getParentId().toString()
+						: item.getParentPath() + "," + item.getParentId());
+			}
+			iMetaMapper.add(item);
+		} else {
+			iMetaMapper.update(item);
+		}
+		return Result.Success(item.getId());
 	}
-	@Override
-	public void add(TMeta item) {
-		iMetaMapper.add(item);
 
-	}
-
-	@Override
-	public	void updateById(TMeta item){
-		iMetaMapper.update(item);
-	}
 
 }

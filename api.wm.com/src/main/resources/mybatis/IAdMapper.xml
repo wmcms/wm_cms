@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wilson.cms.mapper.IAdMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.AdPo" ></resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
         select
         a.id,a.target_id,a.name,a.begin_time,a.end_time,a.url,a.type,a.res_id,a.sort
         from  ad a where a.status &gt;= 0

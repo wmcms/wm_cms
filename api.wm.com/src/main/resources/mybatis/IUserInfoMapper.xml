@@ -6,7 +6,7 @@
     <sql id="base_column_list" >
         id,type,name,real_name,nickname,email,mobile,gender,status,activate_status,head_url,level
   </sql>
-    <select id="searchUser" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestArgs" >
+    <select id="searchUser" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
     select
         u.id,i.type,i.name,i.nickname,i.email,i.mobile,i.gender,u.status,i.activate_status,i.head_url,i.level,i.birth_date
     from user u left join user_info i on u.id=i.id

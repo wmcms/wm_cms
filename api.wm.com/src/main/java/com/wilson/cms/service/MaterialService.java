@@ -4,10 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wilson.cms.mapper.IMaterialMapper;
 import com.wilson.cms.po.MaterialPo;
-import com.wilson.cms.po.NewsPo;
 import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class MaterialService {
      * @param args
      * @return
      */
-    public PageResult<MaterialPo> search(RequestArgs args){
+    public PageResult<MaterialPo> search(RequestParam args){
         PageHelper.startPage(args.getPageIndex(),args.getPageSize());
         List<MaterialPo> list= iMaterialMapper.search(args);
         PageInfo<MaterialPo> pageInfo = new PageInfo<MaterialPo>(list);
@@ -48,7 +47,7 @@ public class MaterialService {
      * @param item
      * @return
      */
-    public Result Save(MaterialPo item){
+    public Result save(MaterialPo item){
         item.setId(StringUtils.newLoginId(MaterialPo.class));
         iMaterialMapper.add(item);
         return  Result.Success(item.getId());

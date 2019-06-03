@@ -4,10 +4,10 @@ import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.annotation.Permission;
 import com.wilson.cms.po.UserPo;
 import com.wilson.cms.utils.RedisUtils;
-import com.wilson.cms.vo.AjaxResult;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.JsonUtils;
 import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +41,13 @@ public class LoginInterceptor implements HandlerInterceptor{
                     String token = request.getHeader("x-api-token");
 
                     if(StringUtils.isEmpty(token)){
-                        responseJson(response,AjaxResult.Error("请先登录"));
+                        responseJson(response,Result.Error("请先登录"));
                         return false;
                     }
                     else {
                         UserPo user = (UserPo) RedisUtils.get(token);
                         if(user==null){
-                            responseJson(response,AjaxResult.Error("请先登录"));
+                            responseJson(response,Result.Error("请先登录"));
                             return false;
                         }
                         request.setAttribute("userId",user.getId());
@@ -59,7 +59,7 @@ public class LoginInterceptor implements HandlerInterceptor{
                         if (permission != null && !StringUtils.isEmpty(permission.value())) {
                             //如果标记了注解，则判断权限
                             String pv=permission.value();
-                            responseJson(response,AjaxResult.Error("请先登录"));
+                            responseJson(response,Result.Error("请先登录"));
                             return false;
                         }
                     }
@@ -68,7 +68,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         }
         return true;
     }
-    private void responseJson(HttpServletResponse response,  AjaxResult  result) throws Exception{
+    private void responseJson(HttpServletResponse response,  Result result) throws Exception{
         PrintWriter writer = null;
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");

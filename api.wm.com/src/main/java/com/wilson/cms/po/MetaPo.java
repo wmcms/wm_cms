@@ -1,13 +1,15 @@
 package com.wilson.cms.po;
 
-public class MeatePo extends PoBase {
+import com.wilson.cms.vo.DataType;
+
+public class MetaPo extends PoBase {
 
     private  Long parentId;
     private  String name;
     private  String parentPath;
     private  String remark;
     private  Short level;
-    private  Short type;
+    private DataType type;
     private  Short sort;
 
     public Long getParentId() {
@@ -50,11 +52,11 @@ public class MeatePo extends PoBase {
         this.level = level;
     }
 
-    public Short getType() {
+    public DataType getType() {
         return type;
     }
 
-    public void setType(Short type) {
+    public void setType(DataType type) {
         this.type = type;
     }
 

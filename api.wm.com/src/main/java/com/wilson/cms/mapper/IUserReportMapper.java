@@ -1,7 +1,7 @@
 package com.wilson.cms.mapper;
 
 import com.wilson.cms.po.TUser;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface IUserReportMapper {
      * @param args 查询参数
      * @return 用户列表
      */
-    List<TUser> searchUser(RequestArgs args);
+    List<TUser> searchUser(RequestParam args);
 
     /**
      * 更新用户

@@ -2,9 +2,7 @@ package com.wilson.cms.mapper;
 
 import com.wilson.cms.po.TUser;
 import com.wilson.cms.po.UserInfoPo;
-import com.wilson.cms.po.UserPo;
-import com.wilson.cms.vo.RequestArgs;
-import com.wilson.cms.vo.UserVo;
+import com.wilson.cms.vo.RequestParam;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -24,7 +22,7 @@ public interface IUserInfoMapper {
      * @param args 查询参数
      * @return 用户列表
      */
-    List<UserInfoPo> searchUser(RequestArgs args);
+    List<UserInfoPo> searchUser(RequestParam args);
 
     /**
      * 更新用户

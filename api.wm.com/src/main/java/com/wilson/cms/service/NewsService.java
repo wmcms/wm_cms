@@ -7,7 +7,7 @@ import com.wilson.cms.mapper.INewsMapper;
 import com.wilson.cms.po.NewsPo;
 import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class NewsService {
      * @param args
      * @return
      */
-    public PageResult<NewsPo> search(RequestArgs args){
+    public PageResult<NewsPo> search(RequestParam args){
         PageHelper.startPage(args.getPageIndex(),args.getPageSize());
         List<NewsPo> list= iNewsMapper.search(args);
         PageInfo<NewsPo> pageInfo = new PageInfo<NewsPo>(list);

@@ -3,14 +3,13 @@ package com.wilson.cms.controller;
 import com.wilson.cms.po.AdPo;
 import com.wilson.cms.service.AdService;
 import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,7 +33,7 @@ public class ADController {
      * @return
      */
     @PostMapping("/search")
-    public Result Search(RequestArgs args){
+    public Result Search(RequestParam args){
         PageResult<AdPo> data = adService.searchWithPageList(args);
         Result result = Result.Success(data);
         return result;

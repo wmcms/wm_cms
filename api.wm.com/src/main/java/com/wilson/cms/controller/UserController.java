@@ -1,15 +1,12 @@
 package com.wilson.cms.controller;
 
 import com.wilson.cms.config.Cms;
-import com.wilson.cms.po.TUser;
 import com.wilson.cms.po.UserBehaviorPo;
 import com.wilson.cms.po.UserInfoPo;
-import com.wilson.cms.po.UserPo;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.*;
+import com.wilson.cms.vo.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -45,7 +42,7 @@ public class UserController
      */
 //    @PostMapping("/password")
 //    @ResponseBody
-//    public AjaxResult Password(PasswordArgs args) throws Exception {
+//    public AjaxResult Password(PasswordParam args) throws Exception {
 //        TUser orgUser = userService.getById(args.getUserId());
 //        if (StringUtils.test(args.getOrigPassword(),orgUser.getSlat(),orgUser.getPassword())){
 //            TUser user = new TUser();
@@ -66,7 +63,7 @@ public class UserController
      * @return
      */
     @PostMapping("/search")
-    public Result search(RequestArgs args){
+    public Result search(RequestParam args){
         PageResult<UserInfoPo> data = userService.search(args);
         Result result = Result.Success(data);
         return result;
@@ -78,7 +75,7 @@ public class UserController
      * @return
      */
     @PostMapping("/search/{behavior}")
-    public Result search(@PathVariable BehaviorType behavior,RequestArgs args){
+    public Result search(@PathVariable BehaviorType behavior, RequestParam args){
         args.setBehaviorType(behavior);
         PageResult<UserBehaviorPo> data = userService.searchBehavior(args);
         Result result = Result.Success(data);
@@ -103,8 +100,7 @@ public class UserController
 
 
     @PostMapping("/batchdelete")
-    @ResponseBody
-    public AjaxResult BatchDelete(@RequestBody ArrayList<Long> ids){
+    public Result BatchDelete(@RequestBody ArrayList<Long> ids){
 //        System.out.println(ids);
 //        String[] strarray=ids.split(",");
 //        List<Long> userIds = new ArrayList<Long>();
@@ -113,7 +109,7 @@ public class UserController
 //        }
         System.out.println(ids);
         userService.batchDelete(ids);
-        return AjaxResult.Success(null);
+        return Result.Success(null);
     }
 
 

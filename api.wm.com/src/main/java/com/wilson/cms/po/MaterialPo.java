@@ -9,10 +9,10 @@ package com.wilson.cms.po;
  **/
 public class MaterialPo extends PoBase {
     private  String name;
-    private Long categoryId;
+    private Long metaId;
     private String fileName;
     private  String fileType;
-    private Long fileSzie;
+    private Long fileSize;
     private String url;
 
     public String getName() {
@@ -23,12 +23,12 @@ public class MaterialPo extends PoBase {
         this.name = name;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Long getMetaId() {
+        return metaId;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setMetaId(Long metaId) {
+        this.metaId = metaId;
     }
 
     public String getFileName() {
@@ -47,12 +47,12 @@ public class MaterialPo extends PoBase {
         this.fileType = fileType;
     }
 
-    public Long getFileSzie() {
-        return fileSzie;
+    public Long getFileSize() {
+        return fileSize;
     }
 
-    public void setFileSzie(Long fileSzie) {
-        this.fileSzie = fileSzie;
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
     }
 
     public String getUrl() {

@@ -1,7 +1,7 @@
 package com.wilson.cms.mapper;
 
 import com.wilson.cms.po.UserBehaviorPo;
-import com.wilson.cms.vo.RequestArgs;
+import com.wilson.cms.vo.RequestParam;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IUserBehaviorMapper {
 
-    public List<UserBehaviorPo> search(RequestArgs args);
+    public List<UserBehaviorPo> search(RequestParam args);
 
     void update(UserBehaviorPo item);
 

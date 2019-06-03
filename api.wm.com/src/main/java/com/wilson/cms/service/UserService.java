@@ -92,16 +92,14 @@ public class UserService{
 	 * @param args  分页参数
 	 * @return
 	 */
-	public PageResult<UserInfoPo> search(RequestArgs args){
+	public PageResult<UserInfoPo> search(RequestParam args){
 		PageHelper.startPage(args.getPageIndex(),args.getPageSize());
 		List<UserInfoPo> list= iUserInfoMapper.searchUser(args);
 		PageInfo<UserInfoPo> pageInfo = new PageInfo<UserInfoPo>(list);
 		PageResult<UserInfoPo> result = new PageResult<>();
 		result.setItems(pageInfo.getList());
 		result.setTotal(pageInfo.getTotal());
-		System.out.println(result);
 		pageInfo=null;
-		System.out.println(result);
 		return  result;
 	}
 
@@ -110,7 +108,7 @@ public class UserService{
 	 * @param args
 	 * @return
 	 */
-	public  PageResult<UserBehaviorPo> searchBehavior(RequestArgs args){
+	public  PageResult<UserBehaviorPo> searchBehavior(RequestParam args){
 		PageHelper.startPage(args.getPageIndex(),args.getPageSize());
 		List<UserBehaviorPo> list= iUserBehaviorMapper.search(args);
 		PageInfo<UserBehaviorPo> pageInfo = new PageInfo<UserBehaviorPo>(list);
