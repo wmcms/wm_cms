@@ -2,7 +2,7 @@ package com.wilson.cms.filter;
 
 import com.wilson.cms.annotation.AllowAnonymous;
 import com.wilson.cms.annotation.Permission;
-import com.wilson.cms.po.UserPo;
+import com.wilson.cms.po.UserAccountPo;
 import com.wilson.cms.utils.RedisUtils;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.JsonUtils;
@@ -39,18 +39,18 @@ public class LoginInterceptor implements HandlerInterceptor{
                 if (allowAnonymous==null) {
                     //如果没有标记了注解，则判登录
                     String token = request.getHeader("x-api-token");
-
                     if(StringUtils.isEmpty(token)){
                         responseJson(response,Result.Error("请先登录"));
                         return false;
                     }
                     else {
-                        UserPo user = (UserPo) RedisUtils.get(token);
+                        UserAccountPo user = (UserAccountPo) RedisUtils.get(token);
                         if(user==null){
                             responseJson(response,Result.Error("请先登录"));
                             return false;
                         }
-                        request.setAttribute("userId",user.getId());
+                        request.setAttribute("userId",user.getUserId());
+                        request.setAttribute("token",token);
                         logger.debug("执行了权限认证，token="+token);
                         Permission permission = handlerMethod.getMethod().getAnnotation(Permission.class);
                         if (permission == null) {

@@ -1,70 +1,42 @@
 package com.wilson.cms.po;
 
-import com.wilson.cms.utils.StringUtils;
-
 import java.sql.Timestamp;
 
-public class NewsPo extends PoBase {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private Long categoryId;
+public class NewsPo extends PoBase {
+	
+    private Long metaId;
     private String title;
-    private Long coverId;
+    private String coverUrl;
     private String keyword;
     private String description;
     private String sourceUrl;
     private String source;
+    private String tags;
     private String author;
-   private Timestamp publishTime;
-   private Timestamp offlineTime;
-   private boolean isAutoPublish;
+   private Long publishTime;
+   private Long offlineTime;
+   @JsonProperty("isAutoPublish")
+   private boolean isAutoPublish;   
+   @JsonProperty("isAutoOffline")
    private boolean isAutoOffline;
+   @JsonProperty("isTop")
    private boolean isTop;
+   @JsonProperty("isHot")
    private boolean isHot;
+   @JsonProperty("isRecommend")
    private boolean isRecommend;
    private Short sort;
-
    private  String content;
-   private  String coverUrl;
-   private  String categoryName;
 
-    public String getSource() {
-        return source;
+
+    public Long getMetaId() {
+        return metaId;
     }
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getCoverUrl() {
-        return coverUrl;
-    }
-
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setMetaId(Long metaId) {
+        this.metaId = metaId;
     }
 
     public String getTitle() {
@@ -75,12 +47,12 @@ public class NewsPo extends PoBase {
         this.title = title;
     }
 
-    public Long getCoverId() {
-        return coverId;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setCoverId(Long coverId) {
-        this.coverId = coverId;
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public String getKeyword() {
@@ -107,6 +79,22 @@ public class NewsPo extends PoBase {
         this.sourceUrl = sourceUrl;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -115,19 +103,19 @@ public class NewsPo extends PoBase {
         this.author = author;
     }
 
-    public Timestamp getPublishTime() {
+    public Long getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(Timestamp publishTime) {
+    public void setPublishTime(Long publishTime) {
         this.publishTime = publishTime;
     }
 
-    public Timestamp getOfflineTime() {
+    public Long getOfflineTime() {
         return offlineTime;
     }
 
-    public void setOfflineTime(Timestamp offlineTime) {
+    public void setOfflineTime(Long offlineTime) {
         this.offlineTime = offlineTime;
     }
 
@@ -177,5 +165,13 @@ public class NewsPo extends PoBase {
 
     public void setSort(Short sort) {
         this.sort = sort;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -3,6 +3,8 @@
 
 #枚举
 cms:
+  uploadDir : C:/project/wm_cms/mat.wm.com
+  matUrl: http://mat.zl.com
   #用户类型
   userType:
     - key: 1

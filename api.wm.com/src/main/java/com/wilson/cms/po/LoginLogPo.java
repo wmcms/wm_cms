@@ -1,8 +1,5 @@
 package com.wilson.cms.po;
 
-import com.sun.jmx.snmp.Timestamp;
-import com.sun.jmx.snmp.mpm.SnmpMsgTranslator;
-
 public class LoginLogPo {
     private Long id;
     private  Long userId;
@@ -12,7 +9,7 @@ public class LoginLogPo {
     private String browser;
     private String country;
     private String area;
-    private Timestamp loginTime;
+    private Long loginTime;
 
     public Long getId() {
         return id;
@@ -78,11 +75,11 @@ public class LoginLogPo {
         this.area = area;
     }
 
-    public Timestamp getLoginTime() {
+    public Long getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Timestamp loginTime) {
+    public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
     }
 }

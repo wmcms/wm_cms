@@ -3,7 +3,7 @@
 <mapper namespace="com.wilson.cms.mapper.IMetaMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.MetaPo" >
     </resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.SearchParam" >
         select a.id,a.parent_id,a.name,a.type,a.parent_path,a.remark,a.sort,a.level,b.name as parent_name
         from meta a left join meta b on a.parent_id=b.id where a.status = 0
         <if test="keyword != null" >
@@ -36,9 +36,10 @@
         <if test="type!=null">,type=#{type}</if>
         <if test="parentId!=null">,parent_id=#{parentId}</if>
         <if test="parentPath!=null">,parent_path=#{parentPath}</if>
-        <if test="remark!=null">,type=#{remark}</if>
-        <if test="level!=null">,type=#{level}</if>
-        <if test="sort!=null">,type=#{sort}</if>
-        <if test="status!=null">,type=#{status}</if>
+        <if test="remark!=null">,remark=#{remark}</if>
+        <if test="level!=null">,level=#{level}</if>
+        <if test="sort!=null">,sort=#{sort}</if>
+        <if test="status!=null">,status=#{status}</if>
+        where id=#{id}
     </update>
 </mapper>

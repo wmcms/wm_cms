@@ -3,14 +3,14 @@
 <mapper namespace="com.wilson.cms.mapper.IMaterialMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.MaterialPo" >
     </resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.SearchParam" >
         select id,meta_id,name,file_name,file_type,file_size,url,create_time
         from material  where status = 0
         <if test="keyword != null" >
             and (name like "%"#{keyword} "%" )
         </if>
         <if test="metaId != null" >
-            and meta_d = #{metaId}
+            and meta_id = #{metaId}
         </if>
         order by create_time desc
     </select>

@@ -1,7 +1,5 @@
 package com.wilson.cms.po;
 
-import com.wilson.cms.vo.DataType;
-
 public class MetaPo extends PoBase {
 
     private  Long parentId;
@@ -9,7 +7,7 @@ public class MetaPo extends PoBase {
     private  String parentPath;
     private  String remark;
     private  Short level;
-    private DataType type;
+    private Integer type;
     private  Short sort;
 
     public Long getParentId() {
@@ -52,11 +50,11 @@ public class MetaPo extends PoBase {
         this.level = level;
     }
 
-    public DataType getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(DataType type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

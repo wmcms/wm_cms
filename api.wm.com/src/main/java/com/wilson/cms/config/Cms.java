@@ -41,6 +41,26 @@ public class Cms {
      */
     private List<Map<String,String>> meateType;
 
+
+    private  String uploadDir;
+    private  String matUrl;
+
+    public String getMatUrl() {
+        return matUrl;
+    }
+
+    public void setMatUrl(String matUrl) {
+        this.matUrl = matUrl;
+    }
+
+    public String getUploadDir() {
+        return uploadDir;
+    }
+
+    public void setUploadDir(String uploadDir) {
+        this.uploadDir = uploadDir;
+    }
+
     public List<Map<String, String>> getUserStatus() {
         return userStatus;
     }

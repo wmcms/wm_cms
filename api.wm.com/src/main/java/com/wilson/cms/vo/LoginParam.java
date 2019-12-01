@@ -10,67 +10,48 @@ package com.wilson.cms.vo;
 
 public class LoginParam  {
 
-   private String loginKey;
+   private String accountId;
    private  String password;
    private  String imgCode;
    private  String smsCode;
-   private  String openId;
+   private  String unionId;
    private  LoginMethod method;
-   private  String mobile;
+public String getAccountId() {
+	return accountId;
+}
+public void setAccountId(String accountId) {
+	this.accountId = accountId;
+}
+public String getPassword() {
+	return password;
+}
+public void setPassword(String password) {
+	this.password = password;
+}
+public String getImgCode() {
+	return imgCode;
+}
+public void setImgCode(String imgCode) {
+	this.imgCode = imgCode;
+}
+public String getSmsCode() {
+	return smsCode;
+}
+public void setSmsCode(String smsCode) {
+	this.smsCode = smsCode;
+}
+public String getUnionId() {
+	return unionId;
+}
+public void setUnionId(String unionId) {
+	this.unionId = unionId;
+}
+public LoginMethod getMethod() {
+	return method;
+}
+public void setMethod(LoginMethod method) {
+	this.method = method;
+}
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getLoginKey() {
-        return loginKey;
-    }
-
-    public void setLoginKey(String loginKey) {
-        this.loginKey = loginKey;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getImgCode() {
-        return imgCode;
-    }
-
-    public void setImgCode(String imgCode) {
-        this.imgCode = imgCode;
-    }
-
-    public String getSmsCode() {
-        return smsCode;
-    }
-
-    public void setSmsCode(String smsCode) {
-        this.smsCode = smsCode;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public LoginMethod getMethod() {
-        return method;
-    }
-
-    public void setMethod(LoginMethod method) {
-        this.method = method;
-    }
+   
 }

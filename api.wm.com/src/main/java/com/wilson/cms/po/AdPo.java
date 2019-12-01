@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class AdPo extends PoBase {
 
-    private  Long targetId;
+    private  Long metaId;
     private String name;
    @JsonFormat(pattern = Constant.DATE_FORMAT,timezone = Constant.TIME_ZONE)
    private Date beginTime;
@@ -15,14 +15,14 @@ public class AdPo extends PoBase {
     private  String url;
     private Short type;
     private  Short sort;
-    private  Long resId;
+    private  String resUrl;
 
-    public Long getTargetId() {
-        return targetId;
+    public Long getMetaId() {
+        return metaId;
     }
 
-    public void setTargetId(Long targetId) {
-        this.targetId = targetId;
+    public void setMetaId(Long metaId) {
+        this.metaId = metaId;
     }
 
     public String getName() {
@@ -73,11 +73,11 @@ public class AdPo extends PoBase {
         this.sort = sort;
     }
 
-    public Long getResId() {
-        return resId;
+    public String getResUrl() {
+        return resUrl;
     }
 
-    public void setResId(Long resId) {
-        this.resId = resId;
+    public void setResUrl(String resUrl) {
+        this.resUrl = resUrl;
     }
 }

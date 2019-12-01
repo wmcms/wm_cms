@@ -1,9 +1,12 @@
 package com.wilson.cms.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.wilson.cms.annotation.AllowAnonymous;
-import com.wilson.cms.config.Cms;
 import com.wilson.cms.exception.NotSupportExecption;
-import com.wilson.cms.po.UserPo;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.Constant;
 import com.wilson.cms.utils.RedisUtils;
@@ -11,10 +14,6 @@ import com.wilson.cms.utils.StringUtils;
 import com.wilson.cms.vo.LoginMethod;
 import com.wilson.cms.vo.LoginParam;
 import com.wilson.cms.vo.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName HomeController
@@ -27,8 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllowAnonymous
 public class LoginController {
-	private static Logger logger=LoggerFactory.getLogger(LoginController.class);
-
 	@Autowired
 	private UserService userService;
 
@@ -38,42 +35,33 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/login")
-	public Result Login(LoginParam request) throws Exception {
-		if(request.getMethod()==null)
+	public Result Login( @RequestBody LoginParam request) throws Exception {
+		if(null==request.getMethod()) {
 			request.setMethod(LoginMethod.password);
-
-		return  passwordLogin(request);
-	}
-
-	/**
-	 * 登录API
-	 * @param request
-	 * @return
-	 */
-	@PostMapping("/login/{method}")
-	public Result Login(@PathVariable("method") LoginMethod method
-			,LoginParam request) throws Exception {
-		request.setMethod(method);
-		switch (method){
-			case mobile:
-				return  mobileLogin(request);
-			case weixin:
-				return  weixinLogin(request);
-				default:
-					throw new NotSupportExecption(Constant.ERROR_NOT_SUPPORT_METHOD);
+		}
+		switch (request.getMethod()) {
+		case mobile:
+			return  mobileLogin(request);
+		case weixin:
+			return  weixinLogin(request);
+		case password:
+			return  passwordLogin(request);	
+		default:
+			throw new NotSupportExecption(Constant.ERROR_NOT_SUPPORT_METHOD);
 		}
 
 	}
+
 	/**
 	 * 微信认证登录
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	Result weixinLogin(LoginParam request) throws Exception {
-		if(StringUtils.isEmpty(request.getOpenId()))
+	private Result weixinLogin(@RequestBody LoginParam request) throws Exception {
+		if(StringUtils.isEmpty(request.getAccountId()))
 			return  Result.Error("openId不能为空");
-		request.setLoginKey(request.getOpenId());
+		//request.setLoginKey(request.getUnionId());
 		return  userService.login(request);
 	}
 	/**
@@ -82,14 +70,22 @@ public class LoginController {
 	 * @return
 	 * @throws Exception
 	 */
-	Result mobileLogin(LoginParam request) throws Exception {
-		if(StringUtils.isEmpty(request.getMobile()))
+	private Result mobileLogin(@RequestBody LoginParam request) throws Exception {
+		if(StringUtils.isEmpty(request.getAccountId()))
 			return  Result.Error("手机号不能为空");
-
+		if(!StringUtils.isMobile(request.getAccountId()))
+			return  Result.Error("请输入正确的手机号码");
 		if(StringUtils.isEmpty(request.getSmsCode()))
 			return  Result.Error("短信验证码不能为空");
-
-		request.setLoginKey(request.getMobile());
+		
+		String key ="SMS_"+request.getAccountId();
+		String smsCode =StringUtils.get(RedisUtils.get(key));
+		if(!request.getSmsCode().equalsIgnoreCase(smsCode)) {
+			//String errorKey="SMS_ERR_"+request.getAccountId();
+			//TODO为安全考虑，防止暴力破解验证码，应该加一些限制
+			return Result.Error("短信验证码不正确或已过期");
+		}
+		
 
 		return  userService.login(request);
 	}
@@ -100,9 +96,9 @@ public class LoginController {
 	 * @return
 	 * @throws Exception
 	 */
-	Result passwordLogin(LoginParam request) throws Exception {
+	private Result passwordLogin(LoginParam request) throws Exception {
 
-		if(StringUtils.isEmpty(request.getLoginKey()))
+		if(StringUtils.isEmpty(request.getAccountId()))
 			return  Result.Error("帐号不能为空");
 
 			if(StringUtils.isEmpty(request.getPassword()))

@@ -1,24 +1,39 @@
 package com.wilson.cms.mapper;
+
 import com.wilson.cms.po.UserPo;
-import org.apache.ibatis.annotations.Update;
+import com.wilson.cms.vo.SearchParam;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface IUserMapper {
-    /**
-     *根据帐号查询登录用户
-     * 账号可以是：手机号，用户名 等
-     * @param id
-     * @param keyword
-     * @return
-     */
-    public UserPo queryExists(Long id, String keyword);
 
     /**
-     * 注册帐号
-     * @param user
+     * 用户列表查询
+     * @param args 查询参数
+     * @return 用户列表
      */
-    void register(UserPo user);
+    List<UserPo> searchUser(SearchParam args);
 
-    @Update("update user set status=#{user.status} where id=#{user.id}")
-    void updateStatus(UserPo user);
+    /**
+     * 更新用户
+     * @param item
+     */
+    void update(UserPo item);
+
+    /**
+     * 批量删除
+     * @param userIds
+     */
+    void  batchDelete(List<Long> userIds);
+
+    /**
+     * 新增用户
+     * @param item
+     */
+    void add(UserPo item);
+
+    UserPo getUser(Long id);
+
 
 }

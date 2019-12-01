@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# OFF、FATAL(罕见严重的错误)、ERROR(错误)、WARN(警告)、INFO(普通信息)、DEBUG(DeBug信息)、ALL，
+#如果配置OFF则不打出任何信息，如果配置为INFO这样只显示INFO、WARN、ERROR的log信息，
+#而DEBUG信息不会被显示,DEBUG级别上仅次与ALL象征日志全部输出.
+#OFF和ALL没有实际意义象征全关全开；
+
+借鉴此博 : https://blog.csdn.net/gebitan505/article/details/70142155?locationNum=1&fps=1
+-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+    <!-- DEBUG log 路径 /root/wdMaYun/networkspider/logbacklog/SpiderLogFILE.log   D:/ALocal/logback_Journal/SpiderLogFILE.log  改为自己的日志目录 TODO-->
+    <property name="FILEPATH" value="c:/project/log/SpiderLogFILE.log"/>
+
+    <!-- Console 输出设置 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志生成位置-->
+        <File>${FILEPATH}</File>
+        <!--日志生成格式-->
+        <encoder>
+            <Pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</Pattern>
+        </encoder>
+        <!--日志生成每天打包压缩一次-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${FILEPATH}%d{yyyy-MM-dd}.gz</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+
+    <!-- geelynote mybatis log 日志 暂时不用-->
+
+    <!--<logger name="com.spider" level="DEBUG"/>-->
+
+    <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="java.sql.Connection" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+    <!--<logger name="java.sql.Statement" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="java.sql.PreparedStatement" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!-- 借鉴此博 : https://blog.csdn.net/gebitan505/article/details/70142155?locationNum=1&fps=1 -->
+    <root level="debug">
+         <appender-ref ref="FILE" />
+         <appender-ref ref="CONSOLE"/>
+    </root>
+
+<!--    &lt;!&ndash;打印异常错误日志 https://www.cnblogs.com/winner-0715/p/6105519.html &ndash;&gt;
+    <logger name="errorLog" level="error" additivity="false">
+        <appender-ref ref="ERROR" />
+    </logger>-->
+
+
+</configuration>
+
+        <!--
+           logger记录器 Demo
+
+         //获得 slf4j记录器对象
+         private static Logger  logger = LoggerFactory.getLogger(TokenCache.class);
+        -->

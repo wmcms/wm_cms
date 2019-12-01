@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IUserAccountMapper" >
+    <sql id="base_column_list" >id,login_key,password,slat,status</sql>
+  <select id="getById" parameterType="String" resultType="com.wilson.cms.po.UserAccountPo">
+       select * from user_account where id =#{id} and status = 0 
+ </select>
+
+<insert id="register" parameterType="com.wilson.cms.po.UserAccountPo">
+    insert  into user_account(id,user_id,type,auth_method,password,create_time,status)
+    select #{id},#{userId},#{type},#{authMethod},#{password},#{createTime} ,#{status}
+</insert>
+    <update id="update" parameterType="com.wilson.cms.po.UserAccountPo">
+    update user_account
+    set user_id=user_id
+        <if test="status != null">
+            ,status=#{status}
+        </if>
+    <if test="password != null">
+        ,password=#{password}
+    </if>
+     <if test="slat != null">
+         ,update_time=#{updateTime}
+        </if>
+ where  id=#{id}
+</update>
+
+</mapper>

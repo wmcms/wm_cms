@@ -9,8 +9,8 @@ package com.wilson.cms.vo;
  **/
 
 public enum UploadMethod {
-    FILE,
-    IMAGE,
-    VIDEDO,
-    HEAD
+    file,
+    image,
+    video,
+    head
 }

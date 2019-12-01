@@ -1,0 +1,35 @@
+<html>
+<body>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+ $(function(){
+	
+	 $.ajax({	
+		   url: "http://47.112.119.60:83/changepassword",		
+		   type:"POST",	 
+		   contentType: "application/json", 
+		  headers:{'x-api-token':'69EA8F31A892DA62C1902D69D85DA2BD'},
+		   data:JSON.stringify(
+				   {
+					   oldPassword:"123456",
+					   confirmPassword:"1234567",
+					   password:"1234567",
+					   app:"admin",
+				   }),
+		   success: function(res){
+			   debugger;
+		   }
+		 });
+	 $.ajax({	
+		   url: "http://47.112.119.60:83/logout",		
+		   type:"get",	 
+		   contentType: "application/json", 
+		  headers:{'x-api-token':'ss'},		   
+		   success: function(res){
+			   debugger;
+		   }
+		 });
+ })
+</script>
+</body>
+</html>

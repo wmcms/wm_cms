@@ -1,7 +1,7 @@
 package com.wilson.cms.mapper;
 
 import com.wilson.cms.po.AdPo;
-import com.wilson.cms.vo.RequestParam;
+import com.wilson.cms.vo.SearchParam;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IAdMapper {
 
-   public List<AdPo> search(RequestParam args);
+   public List<AdPo> search(SearchParam args);
 
    void update(AdPo item);
 

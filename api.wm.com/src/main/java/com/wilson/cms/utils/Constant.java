@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 public class Constant {
 
 	public  static final String DATE_FORMAT="yyyy-MM-dd";
+	public  static final String DATE_DIR_FORMAT="yyyy/MM/dd";
 	public  static final String TIME_ZONE="GTM+8";
 	public  static final String DATE_TIME_FORMAT="yyyy-MM-dd HH:mm:ss";
 	public  static final String STR_DATE_TIME_FORMAT="yyyyMMddHHmmss";
@@ -37,6 +38,10 @@ public class Constant {
 	 * 图片验证码长度
 	 */
 	public  static  final  Integer IMG_CODE_LENGTH=4;
+	public  static  final  String REGEX_MOBILE="^1\\d{10}$";
+	public  static  final  String REGEX_USERNAME="^[a-zA-Z0-9]+[a-zA-Z0-9_.@]{5,19}$";
+	public  static  final  String REGEX_NICKNAME="^[a-zA-Z0-9_\\u4e00-\\u9fa5]+[a-zA-Z0-9_ \\u4e00-\\u9fa5]{1,19}$";
+	public  static  final  String REGEX_EMAIL="^1\\d{10}$";
 
 	public static final String NUMBER_STRING = "0123456789"; // 数字
 	public static final String CHAR_STRING = "ABCKL0123456789MNOPQRSTghiklUVXYZ0123456789abcdefmn0123456789opqrstDEFGHIuvxyx";

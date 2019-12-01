@@ -1,11 +1,6 @@
 package com.wilson.cms;
 
-import  java.sql.Timestamp;
-import java.time.LocalDateTime;
-
-import com.wilson.cms.po.TUser;
 import com.wilson.cms.service.UserService;
-import org.apache.ibatis.type.JdbcType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

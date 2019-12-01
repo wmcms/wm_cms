@@ -1,10 +1,5 @@
 package com.wilson.cms.service;
 
-import com.wilson.cms.po.TUser;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
-
 /**
  * 抽象类IService
 * @ClassName: IService

@@ -1,17 +1,20 @@
 package com.wilson.cms.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wilson.cms.mapper.IMaterialMapper;
 import com.wilson.cms.po.MaterialPo;
 import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.FileVo;
+import com.wilson.cms.vo.MaterialVo;
 import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.wilson.cms.vo.SearchParam;
 
 /**
  * @ClassName MaterialService
@@ -31,7 +34,7 @@ public class MaterialService {
      * @param args
      * @return
      */
-    public PageResult<MaterialPo> search(RequestParam args){
+    public PageResult<MaterialPo> search(SearchParam args){
         PageHelper.startPage(args.getPageIndex(),args.getPageSize());
         List<MaterialPo> list= iMaterialMapper.search(args);
         PageInfo<MaterialPo> pageInfo = new PageInfo<MaterialPo>(list);
@@ -47,10 +50,28 @@ public class MaterialService {
      * @param item
      * @return
      */
-    public Result save(MaterialPo item){
-        item.setId(StringUtils.newLoginId(MaterialPo.class));
-        iMaterialMapper.add(item);
-        return  Result.Success(item.getId());
+    public Result save(MaterialVo item){
+
+      MaterialPo materialPo = item.getMaterialPo();
+      if(materialPo.getId()>0){
+      }
+      else {
+          for (FileVo file : item.getFiles()){
+              try {
+                  materialPo.setFileName(file.getName());
+                  materialPo.setFileType(file.getType());
+                  materialPo.setFileSize(file.getSize());
+                  materialPo.setUrl(file.getUrl());
+                  materialPo.setId(StringUtils.newLongId(MaterialPo.class));
+                  iMaterialMapper.add(materialPo);
+              }
+              catch (Exception ex){
+                  continue;
+              }
+          }
+
+      }
+      return  Result.Success(materialPo.getId());
     }
 
     /**
@@ -58,8 +79,8 @@ public class MaterialService {
      * @param ids
      * @return
      */
-    public Result removeAt(String ids){
-        iMaterialMapper.removeAt(ids);
-        return  Result.Success(ids);
+    public Result removeAt(Long id){
+        iMaterialMapper.removeAt(id);
+        return  Result.Success(id);
     }
 }

@@ -2,6 +2,8 @@ package com.wilson.cms.utils;
 
 import com.wilson.cms.exception.NotSupportExecption;
 import org.springframework.util.DigestUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,6 +104,7 @@ public class StringUtils {
 		if(!StringUtils.isEmpty(slat))
 			text =text+"#"+slat;
 
+		System.out.println("mingwen:"+text);
 		return md5Encryption(text);
 	}
 	public static String md5Encryption(String text) throws Exception {
@@ -127,18 +130,91 @@ public class StringUtils {
 		String md5Text = md5Encryption(text);
 		return  md5Text.equalsIgnoreCase(md5);
 	}
-
+	
+	public static String get(Object val) {
+		if(null==val) return "";
+		return val.toString();
+	}
+	
+	/*
+	 * 是否是手机号
+	 */
+	public static boolean isMobile(String  mobile) {
+		if(isEmpty(mobile)) return false;
+		
+		return mobile.matches(Constant.REGEX_MOBILE);
+	}
+	public static boolean isNickname(String  str) {
+		if(isEmpty(str)) return true;
+		
+		return str.matches(Constant.REGEX_NICKNAME);
+	}
+	public static boolean isUserName(String  str) {
+		if(isEmpty(str)) return false;
+		
+		return str.matches(Constant.REGEX_USERNAME);
+	}
+	/**
+	   * 随机生成6位验证码
+     * @return
+     */
+    public static String getRandomCode(Integer code){
+        Random random = new Random();
+        StringBuffer result= new StringBuffer();
+        for (int i=0;i<code;i++){
+            result.append(random.nextInt(10));
+        }
+        return result.toString();
+    }
+    
+    public static String getSmsCode(){
+    	return getRandomCode(6);
+    }
+    
 	/**
 	 * 获取一个长整形的主键
 	 * @param clizz 实体类
 	 * @param <T> 类型
 	 * @return
 	 */
-	public static  <T> Long newLoginId(Class<T> clizz){
+	public static  <T> Long newLongId(Class<T> clizz){
 		Date date =new Date();
 		String formatStr = new SimpleDateFormat(Constant.STR_ID_DATE_TIME_FORMAT).format(date);
 		long resId = Long.parseLong(formatStr+"0000");
 		String key =clizz.getName();
 		return  resId+RedisUtils.incr(key);
 	}
+
+//	public static String getIp() {
+//		HttpServletRequest request = getHttpServletRequest();
+//		String ip = request.getHeader("X-Forwarded-For");
+//		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//				ip = request.getHeader("Proxy-Client-IP");
+//			}
+//			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//				ip = request.getHeader("WL-Proxy-Client-IP");
+//			}
+//			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//				ip = request.getHeader("HTTP_CLIENT_IP");
+//			}
+//			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+//			}
+//			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//				ip = request.getRemoteAddr();
+//			}
+//		}else if (ip != null && ip.length() > 15) {
+//			String[] ips = ip.split(",");
+//			for (int index = 0; index < ips.length; index++) {
+//				String strIp = (String) ips[index];
+//				if (!("unknown".equalsIgnoreCase(strIp))) {
+//					ip = strIp;
+//					break;
+//				}
+//			}
+//		}
+//		return ip;
+//	}
+
 }

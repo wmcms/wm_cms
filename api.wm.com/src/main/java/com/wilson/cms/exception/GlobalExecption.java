@@ -3,9 +3,9 @@ package com.wilson.cms.exception;
 import com.wilson.cms.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName GlobalExecption
@@ -17,6 +17,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(annotations = RestController.class)
 public class GlobalExecption {
     private static Logger logger = LoggerFactory.getLogger(GlobalExecption.class);
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+
+    }
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        System.out.println("ddd");
+        model.addAttribute("author", "Magical Sam");
+
+    }
 //
 //    /**
 //     * 非法访问
@@ -64,6 +75,7 @@ public class GlobalExecption {
     @ExceptionHandler(Exception.class)
     public Result otherException(Exception ex) {
         logger.error("操作失败：{}", ex);
+        ex.printStackTrace();
         return Result.Execption("服务繁忙，请稍候，或联系管理员。");
 //        ApiResponseCode apiResponseCode = ApiResponseCode.CODE_UNKNOWN;
 //

@@ -1,18 +1,15 @@
 package com.wilson.cms.po;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * 实体基类
  * 定义所有表的公共字段
  */
-public class PoBase implements Serializable {
+public class PoBase {
 
     public PoBase() {
-        this.createTime = Timestamp.valueOf(LocalDateTime.now());
-        this.updateTime=Timestamp.valueOf(LocalDateTime.now());
+        this.createTime = System.currentTimeMillis(); 
+        this.updateTime=System.currentTimeMillis();
         this.status=0;
     }
 
@@ -23,7 +20,7 @@ public class PoBase implements Serializable {
     /**
      * 创建时间
      */
-    protected Timestamp createTime;
+    protected Long createTime;
     /**
      * 创建人
      */
@@ -31,7 +28,7 @@ public class PoBase implements Serializable {
     /**
      * 修改时间
      */
-    protected Timestamp updateTime;
+    protected Long updateTime;
     /**
      * 修改人
      */
@@ -39,7 +36,7 @@ public class PoBase implements Serializable {
     /**
      * 数据状态
      */
-    protected Short status;
+    protected Integer status;
 
     public Long getId() {
         return id;
@@ -49,11 +46,11 @@ public class PoBase implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -65,11 +62,11 @@ public class PoBase implements Serializable {
         this.createUserId = createUserId;
     }
 
-    public Timestamp getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -81,11 +78,11 @@ public class PoBase implements Serializable {
         this.updateUserId = updateUserId;
     }
 
-    public Short getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }

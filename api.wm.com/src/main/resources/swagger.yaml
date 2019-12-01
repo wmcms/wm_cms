@@ -1,0 +1,455 @@
+---
+swagger: "2.0"
+info:
+  description: 闻忙CMS API 文档
+  version: 1.0.0
+  title: 深圳市闻忙科技有限公司
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: 47.92.163.70:83
+basePath: /
+tags:
+- name: 帐号相关
+  description: 登录|注册|找回密码
+- name: 验证相关
+  description: 获取图片验证码|短信验证码|用户名重复|手机号重复
+- name: 内容相关
+  description: 文章列表|详情
+- name: 个人中心
+  description: 用户行为|我的分享|我的收藏
+schemes:
+- http
+paths:
+  /login:
+    post:
+      tags:
+      - 帐号
+      summary: 密码登录
+      operationId: login
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: param
+        description: 登录参数，LoginParam
+        required: true
+        schema:
+          $ref: '#/definitions/LoginParam'
+      responses:
+        200:
+          description: 返回Token字符串
+          schema:
+            type: string
+        405:
+          description: 参数错误
+  /user/logout:
+    get:
+      tags:
+      - 帐号
+      summary: 登出
+      operationId: logout
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: x-api-token
+        in: header
+        description: 请求需要携带的令牌Token
+        required: true
+        type: string
+      responses:
+        200:
+          description: 返回 true or false
+          schema:
+            type: boolean
+        405:
+          description: 参数错误
+  /save/{behavior}:
+    post:
+      tags:
+      - 用户
+      summary: 保存用户行为
+      operationId: saveUserBehavior
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: x-api-token
+        in: header
+        description: 请求需要携带的令牌Token
+        required: true
+        type: string
+      - name: behavior
+        in: path
+        description: 用户行为
+        required: true
+        type: string
+        enum:
+        - collection
+        - parise
+        - forward
+        - comment
+        - reply
+        - vote
+      - in: body
+        name: param
+        description: 行为记录参数
+        required: true
+        schema:
+          $ref: '#/definitions/Behavior'
+      responses:
+        200:
+          description: 返回 int64 id
+          schema:
+            type: integer
+        405:
+          description: 参数错误
+  /my/{behavior}:
+    post:
+      tags:
+      - 用户
+      summary: 查询用户行为
+      operationId: qeryUserBehavior
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: x-api-token
+        in: header
+        description: 请求需要携带的令牌Token
+        required: true
+        type: string
+      - name: behavior
+        in: path
+        description: 用户行为
+        required: true
+        type: string
+        enum:
+        - collection
+        - parise
+        - forward
+        - comment
+        - reply
+        - vote
+      - in: body
+        name: param
+        description: 分页查询参数，PageQueryParam
+        required: true
+        schema:
+          $ref: '#/definitions/PageQueryParam'
+      responses:
+        200:
+          description: 返回对象 BehaviorPageResult
+          schema:
+            $ref: '#/definitions/BehaviorPageResult'
+        405:
+          description: 参数错误
+  /news:
+    post:
+      tags:
+      - 资讯
+      summary: 资讯分页查询
+      operationId: queryNews
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: param
+        description: 分页查询参数，PageQueryParam
+        required: true
+        schema:
+          $ref: '#/definitions/PageQueryParam'
+      responses:
+        200:
+          description: 返回对象 NewsPageResult
+          schema:
+            $ref: '#/definitions/NewsPageResult'
+        405:
+          description: 参数错误
+  /news/{id}:
+    get:
+      tags:
+      - 资讯
+      summary: 获取资讯详细信息
+      operationId: getNewsById
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: 资讯Id
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: 返回对象 News
+          schema:
+            $ref: '#/definitions/News'
+        405:
+          description: 参数错误
+  /imagecode:
+    get:
+      tags:
+      - 验证
+      summary: 获取图片验证码
+      operationId: getImageCode
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: 返回对象 ImageCode
+          schema:
+            $ref: '#/definitions/ImageCode'
+        405:
+          description: 参数错误
+  /test/account:
+    post:
+      tags:
+      - 验证
+      summary: 验证帐号的合法性
+      operationId: checkAccount
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: x-api-token
+        in: header
+        description: 请求需要携带的令牌Token
+        required: false
+        type: string
+      - name: accountId
+        in: query
+        description: 帐号
+        required: true
+        type: string
+      responses:
+        200:
+          description: 返回 true or false
+          schema:
+            type: boolean
+            example: "true"
+        405:
+          description: 参数错误
+definitions:
+  ImageCode:
+    type: object
+    properties:
+      imgKey:
+        type: string
+        description: key
+      imgCode:
+        type: string
+        format: base64
+        description: 图片验证码
+    description: 图片验证码对象
+  LoginParam:
+    type: object
+    properties:
+      method:
+        type: string
+        description: 登录方式
+        enum:
+        - password
+        - mobile
+        - weixin
+      loginKey:
+        type: string
+        format: ""
+        description: 帐号
+      password:
+        type: string
+        description: 密码
+      imgCodeKey:
+        type: string
+        description: 图片验证码键值
+      imgCode:
+        type: string
+        description: 图片验证码
+      smsCode:
+        type: string
+        description: 短信验证码
+    description: 登录参数
+  PageQueryParam:
+    type: object
+    properties:
+      pageIndex:
+        type: integer
+        example: 1
+        description: 页码
+      pageSize:
+        type: integer
+        example: 10
+        description: 页面大小
+      type:
+        type: integer
+        description: 类型
+      status:
+        type: integer
+        description: 状态
+      targetId:
+        type: integer
+        format: int64
+        description: 关联Id
+      metaId:
+        type: integer
+        format: int64
+        description: 元数据Id
+      behaviorType:
+        type: string
+        description: 用户行为
+        enum:
+        - collection
+        - parise
+        - forward
+        - comment
+        - reply
+        - vote
+      keyword:
+        type: string
+        description: 关键字
+    description: 查询参数
+  NewsPageResult:
+    type: object
+    properties:
+      total:
+        type: integer
+        description: 总记录数
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/News'
+    description: 资讯分页查询返回结果对象
+  News:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 资讯Id
+      metaId:
+        type: integer
+        format: int64
+        description: 类别Id
+      title:
+        type: string
+        description: 标题
+      coverUrl:
+        type: string
+        description: 封面
+      keyword:
+        type: string
+        description: 关键字
+      description:
+        type: string
+        description: 描述
+      author:
+        type: string
+        description: 作者
+      sourceUrl:
+        type: string
+        description: 来源
+      tags:
+        type: string
+        description: 标签
+      publishTime:
+        type: string
+        description: 发布时间
+      content:
+        type: string
+        example: null
+        description: 内容
+      sort:
+        type: integer
+        description: 排序
+      hot:
+        type: boolean
+        example: false
+        description: 热门
+      top:
+        type: boolean
+        example: false
+        description: 置顶
+      recommend:
+        type: boolean
+        example: false
+        description: 推荐
+      voteItems:
+        type: array
+        description: 投票项目
+        items:
+          $ref: '#/definitions/Vote'
+    description: 资讯分页查询返回结果对象
+  Vote:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 项目Id
+      targetId:
+        type: integer
+        format: int64
+        description: 关联Id
+      title:
+        type: string
+        description: 标题
+      url:
+        type: string
+        description: 介绍链接
+      description:
+        type: string
+        description: 描述
+      sort:
+        type: integer
+        description: 排序
+      total:
+        type: integer
+        description: 总票数
+    description: 投票项目
+  BehaviorPageResult:
+    type: object
+    properties:
+      total:
+        type: integer
+        description: 总记录数
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Behavior'
+    description: 行为分页查询返回结果对象
+  Behavior:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: id
+      targetId:
+        type: integer
+        format: int64
+        description: 关联Id
+      ip:
+        type: string
+        description: 用户Ip
+      content:
+        type: string
+        description: 内容
+    description: 用户行为对象

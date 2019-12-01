@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wilson.cms.mapper.IVoteMapper" >
+    <resultMap id="itemMap" type="com.wilson.cms.po.VotePo" >
+    </resultMap>
+    <select id="getAll" resultMap="itemMap" parameterType="java.lang.Long" >
+        select  id,target_id,url,title,description,begin_time,end_time,`interval`,max_selected,mode,total,sort  from vote
+        where status = 0 and target_id=#{targetId}
+        order by sort ,create_time desc
+    </select>
+
+    <insert id="add" parameterType="com.wilson.cms.po.VotePo">
+        insert  into vote(id,target_id,title,create_user_id,create_time
+            <if test="url!=null">,url</if>
+            <if test="description!=null">,description</if>
+            <if test="beginTime!=null">,begin_time</if>
+            <if test="endTime!=null">,end_time</if>
+            <if test="interval!=null">,`interval`</if>
+            <if test="maxSelected!=null">,max_selected</if>
+            <if test="mode!=null">,mode</if>
+            <if test="sort!=null">,sort</if>
+            <if test="total!=null">,total</if>
+        )
+        select #{id},#{targetId},#{title} ,#{createUserId} ,#{createTime}
+        <if test="url!=null">,#{url}</if>
+        <if test="description!=null">,#{description}</if>
+        <if test="beginTime!=null">,#{beginTime}</if>
+        <if test="endTime!=null">,#{endTime}</if>
+        <if test="interval!=null">,#{interval}</if>
+        <if test="maxSelected!=null">,#{maxSelected}</if>
+        <if test="mode!=null">,#{mode}</if>
+        <if test="sort!=null">,#{sort}</if>
+        <if test="total!=null">,#{total}</if>
+    </insert>
+    <update id="update" parameterType="com.wilson.cms.po.VotePo">
+        update vote set title=#{title},update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="url!=null">,url=#{url}</if>
+        <if test="description!=null">,description=#{description}</if>
+        <if test="beginTime!=null">,begin_time=#{beginTime}</if>
+        <if test="endTime!=null">,end_time=#{endTime}</if>
+        <if test="interval!=null">,`interval`=#{interval}</if>
+        <if test="maxSelected!=null">,max_selected=#{maxSelected}</if>
+        <if test="mode!=null">,mode=#{mode}</if>
+        <if test="sort!=null">,sort=#{sort}</if>
+        <if test="total!=null">,total=#{total}</if>
+        <if test="status!=null">,status=#{status}</if>
+    </update>
+
+</mapper>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.0.M2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.wilson</groupId>
 	<artifactId>cms</artifactId>
@@ -15,69 +16,88 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 		<java.version>1.8</java.version>
-        <github.pagehelper.version>4.1.4</github.pagehelper.version>
-        <github.penggle.version>2.3.2</github.penggle.version>
+		<github.pagehelper.version>4.1.4</github.pagehelper.version>
+		<github.penggle.version>2.3.2</github.penggle.version>
 	</properties>
 
 	<dependencies>
-		<!--Redis缓存-->
+	 <!-- HttpClient支持 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+	  <!--Jsoup支持 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+		<!--Redis缓存 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		<!--任务高度框架-->
+		<!--任务高度框架 -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-quartz</artifactId> 
+			</dependency> -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-quartz</artifactId>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.3</version>
 		</dependency>
-		<!--Spring Aop 切面容器-->
+		<!--Spring Aop 切面容器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-        <!-- SpringBoot Web容器 -->
+		<!-- SpringBoot Web容器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-        <!-- SpringBoot集成mybatis框架 -->
+		<!-- SpringBoot集成mybatis框架 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.0.1</version>
 		</dependency>
-        <!-- 热部署插件 -->
+		<!-- 热部署插件 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 			<scope>runtime</scope>
 		</dependency>
-        <!-- mysql 数据源驱动 -->
+		<!-- mysql 数据源驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-        <!-- SpringBoot 测试 -->
+		<!-- SpringBoot 测试 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <!-- pageHelper 分页查询插件 -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${github.pagehelper.version}</version>
-        </dependency>
-        <!-- google验证码 -->
-        <dependency>
-            <groupId>com.github.penggle</groupId>
-            <artifactId>kaptcha</artifactId>
-            <version>${github.penggle.version}</version>
-        </dependency>
+		<!-- pageHelper 分页查询插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>${github.pagehelper.version}</version>
+		</dependency>
+		<!-- google验证码 -->
+		<dependency>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>${github.penggle.version}</version>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<build>
@@ -85,10 +105,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<!--必做加上这个配置，执部署才生效-->
-					<fork>true</fork>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,16 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wilson.cms.mapper.IUserMapper" >
-    <sql id="base_column_list" >id,login_key,password,slat,status</sql>
-  <select id="queryExists" parameterType="String" resultType="com.wilson.cms.po.UserPo">
-       select <include refid="base_column_list" />
-       from user where 1=1 and status = 0 and (login_key=#{keyword} or exists(select 0 from user_open where open_id=#{keyword} and user_id=user.id))
-      <if test="id != null" >and id !={#id} </if>  limit 0,1
- </select>
+  <resultMap id="itemMap" type="com.wilson.cms.po.UserPo" >
+  </resultMap>
+    <sql id="base_column_list" >
+        id,role,name,real_name,nickname,email,mobile,gender,status,activate_status,head_url,level
+  </sql>
+    <select id="searchUser" resultMap="itemMap" parameterType="com.wilson.cms.vo.SearchParam" >
+    select
+        u.id,u.role,u.name,u.nickname,u.email,u.mobile,u.gender,u.status,u.activate_status,u.head_url,u.level,u.birth_date
+    from user u 
+      where u.status &gt;= 0
+    <if test="keyword != null" >
+       and (u.name like "%"#{keyword} "%" or u.nickname like  "%"#{keyword} "%" or u.mobile like  "%"#{keyword} "%" )
+    </if>
+     <if test="type != null" >
+       and u.type = #{type}
+    </if>
+    order by u.update_time desc
+</select>
+    <select id="getUser" resultType="com.wilson.cms.po.UserPo" parameterType="java.lang.Long" >
+        select
+        u.id,u.role,u.name,u.nickname,u.gender,u.activate_status,u.head_url
+        from user u
+        where u.id=#{id}
+    </select>
+<insert id="add" parameterType="com.wilson.cms.po.UserPo">
+    insert  into user(id,mobile,nickname,create_user_id,create_time
+    <if test="activateStatus!=null">,activate_status</if>
+    <if test="level!=null">,level</if>
+    <if test="role!=null">,role</if>
+    <if test="headUrl!=null">,head_url</if>
+    <if test="email!=null">,email</if>
+    <if test="name!=null">,name</if>
+    <if test="gender!=null">,gender</if>
+    <if test="idCardNo!=null">,id_card_no</if>
+    <if test="birthDate!=null">,birth_date</if>
+    )
+    select #{id},#{mobile} ,#{nickname},#{createUserId} ,#{createTime}
+    <if test="activateStatus!=null">,#{activateStatus}</if>
+    <if test="level!=null">,#{level}</if>
+    <if test="role!=null">,#{role}</if>
+    <if test="headUrl!=null">,#{headUrl}</if>
+    <if test="email!=null">,#{email}</if>
+    <if test="name!=null">,#{name}</if>
+    <if test="gender!=null">,#{gender}</if>
+    <if test="idCardNo!=null">,#{idCardNo}</if>
+    <if test="birthDate!=null">,#{birthDate}</if>
 
-<insert id="register" parameterType="com.wilson.cms.po.UserPo">
-    insert  into user(id,login_key,password,slat,status)
-    select #{id},#{loginKey},#{password},#{slat} ,#{status}
 </insert>
-
+    <update id="update" parameterType="com.wilson.cms.po.UserPo">
+        update user set update_time=#{updateTime},update_user_id=#{updateUserId}
+        <if test="name!=null">  ,name=#{name} </if>
+        <if test="nickname!=null">  ,nickname=#{nickname} </if>
+        <if test="gender!=null">  ,gender=#{gender} </if>
+        <if test="email!=null">  ,email=#{email} </if>
+        <if test="birthDate!=null">  ,birth_date=#{birthDate}  </if>
+        <if test="mobile!=null">  ,mobile=#{mobile} </if>
+        <if test="activateStatus!=null">  ,activate_status=#{activateStatus} </if>
+        <if test="level!=null">  ,level=#{level}  </if>
+        <if test="role!=null">  ,role=#{role} </if>
+        <if test="idCardNo!=null">  ,id_card_no=#{idCardNo} </if>
+        <if test="headUrl!=null">  ,head_url=#{headUrl} </if>
+        <if test="status!=null">  ,status=#{status} </if>
+        where id=#{id}
+    </update>
+    <update id="batchDelete" parameterType="java.util.List">
+        UPDATE user  SET status=-1  WHERE id IN
+        <foreach collection="list" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
 </mapper>

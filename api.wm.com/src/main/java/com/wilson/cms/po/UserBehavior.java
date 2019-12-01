@@ -2,8 +2,6 @@ package com.wilson.cms.po;
 
 import com.wilson.cms.vo.BehaviorType;
 
-import java.sql.Timestamp;
-
 /**
  * @ClassName UserBehavior
  * @Description TODO
@@ -18,7 +16,7 @@ public class UserBehavior {
     private Long targetId;
     private Long userId;
     private Short status;
-    private Timestamp createTime;
+    private Long createTime;
     private  String content;
     private  String ip;
 
@@ -78,11 +76,11 @@ public class UserBehavior {
         this.status = status;
     }
 
-    public Timestamp getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 }

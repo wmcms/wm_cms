@@ -1,60 +1,90 @@
 package com.wilson.cms.po;
 
-import com.wilson.cms.config.Cms;
-import com.wilson.cms.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+public class UserPo extends PoBase {
 
-public class UserPo  {
+    private String name;
+    private String nickname;
+    private String headUrl;
+    private char gender;
+    private String email;
+    private String idCardNo;
+    private String mobile;
+    private long birthDate;
+    private Integer activateStatus;
+    private Integer level;
+    private Integer role;
+    private String password;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getHeadUrl() {
+		return headUrl;
+	}
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
+	public char getGender() {
+		return gender;
+	}
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getIdCardNo() {
+		return idCardNo;
+	}
+	public void setIdCardNo(String idCardNo) {
+		this.idCardNo = idCardNo;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public long getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(long birthDate) {
+		this.birthDate = birthDate;
+	}
+	public Integer getActivateStatus() {
+		return activateStatus;
+	}
+	public void setActivateStatus(Integer activateStatus) {
+		this.activateStatus = activateStatus;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public Integer getRole() {
+		return role;
+	}
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  private Long id;
-  private String loginKey;
-  private  String password;
-  private  String slat;
-  private  Short status;
-
-    public UserPo() {
-        this.id = StringUtils.newLoginId(UserPo.class);
-        this.slat =StringUtils.newImgCode();
-        this.status=0;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLoginKey() {
-        return loginKey;
-    }
-
-    public void setLoginKey(String loginKey) {
-        this.loginKey = loginKey;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSlat() {
-        return slat;
-    }
-
-    public void setSlat(String slat) {
-        this.slat = slat;
-    }
-
-    public Short getStatus() {
-        return status;
-    }
-
-    public void setStatus(Short status) {
-        this.status = status;
-    }
 }

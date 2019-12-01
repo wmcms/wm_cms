@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wilson.cms.mapper.IAdMapper" >
     <resultMap id="itemMap" type="com.wilson.cms.po.AdPo" ></resultMap>
-    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.RequestParam" >
+    <select id="search" resultMap="itemMap" parameterType="com.wilson.cms.vo.SearchParam" >
         select
-        a.id,a.target_id,a.name,a.begin_time,a.end_time,a.url,a.type,a.res_id,a.sort
+        a.id,a.meta_id,a.name,a.begin_time,a.end_time,a.url,a.type,a.res_url,a.sort
         from  ad a where a.status &gt;= 0
         <if test="keyword != null" >
             and (a.name like "%"#{keyword} "%" )
+        </if>
+        <if test="metaId != null" >
+            and a.meta_id = #{metaId}
         </if>
         <if test="type != null" >
             and a.type = #{type}
@@ -15,31 +18,32 @@
         order by a.update_time desc
     </select>
     <insert id="add" parameterType="com.wilson.cms.po.AdPo">
-        insert into ad(id, name, target_id, create_user_id,create_time
+        insert into ad(id, name, meta_id, create_user_id,create_time
         <if test="beginTime!=null">,begin_time</if>
         <if test="endTime!=null">,end_time</if>
         <if test="url!=null">,url</if>
         <if test="type!=null">,type</if>
-        <if test="resId!=null">,res_id</if>
+        <if test="resUrl!=null">,res_url</if>
         <if test="sort!=null">,sort</if>
         )
-        select #{id},#{name},#{targetId} ,#{createUserId},#{createTime}
+        select #{id},#{name},#{metaId} ,#{createUserId},#{createTime}
         <if test="beginTime!=null">,#{beginTime}</if>
         <if test="endTime!=null">,#{endTime}</if>
         <if test="url!=null">,#{url}</if>
         <if test="type!=null">,#{type}</if>
-        <if test="resId!=null">,#{resId}</if>
+        <if test="resUrl!=null">,#{resUrl}</if>
         <if test="sort!=null">,#{sort}</if>
     </insert>
     <update id="update" parameterType="com.wilson.cms.po.AdPo">
-        update meta set update_time=#{updateTime},update_user_id=#{updateUserId}
+        update ad set update_time=#{updateTime},update_user_id=#{updateUserId}
         <if test="beginTime!=null">,begin_time=#{beginTime}</if>
         <if test="endTime!=null">,end_time=#{endTime}</if>
         <if test="url!=null">,url=#{url}</if>
         <if test="type!=null">,type=#{type}</if>
-        <if test="resId!=null">,res_id=#{resId}</if>
+        <if test="resUrl!=null">,res_url=#{resUrl}</if>
         <if test="sort!=null">,sort=#{sort}</if>
         <if test="status!=null">,status=#{status}</if>
+        <if test="metaId!=null">,meta_id=#{metaId}</if>
         where id=#{id}
     </update>
 </mapper>

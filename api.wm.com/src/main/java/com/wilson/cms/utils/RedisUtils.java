@@ -22,6 +22,8 @@ public class RedisUtils {
 	@SuppressWarnings("unchecked")
 	@Autowired
 	 RedisTemplate<String, Object> redisTemplate;
+	
+	
 
 	// 维护一个本类的静态变量
 	static RedisUtils redisUtils;
@@ -103,9 +105,10 @@ public class RedisUtils {
 	 */
 	public static Object get(final String key) {
 
-		return redisUtils.redisTemplate.opsForValue().get(key);
+		Object res= redisUtils.redisTemplate.opsForValue().get(key);
+		
+		return res;
 	}
-
 
 	/**
 	 * 获取普通对象

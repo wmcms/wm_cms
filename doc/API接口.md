@@ -32,8 +32,7 @@
 >用户登录 
      
   * url POST: {domain}/login
-  * 请求参数 
-  
+  * 请求参数
    |位置|参数|类型|长度|是否必填|Default|描述|
  |:----|:----|:----:|:----:|:---:|:---:|:---:|
  |body|accountId|String| /|Y|/ |帐号，method=password时，代表用户名，method=mobile时，代表手机号，method=weixin，代表UnionId|
@@ -58,7 +57,6 @@
       
    * url GET: {domain}/user/info   
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |header|x-api-token|stirng| /|Y|/|令牌|
@@ -92,7 +90,7 @@
 		    "success": true,
 		    "data": {
 		        "id": "7C88272480FD00113A7FF743F87A592C",
-                       "data": "data:image/jpeg;base64,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"
+		        "data": "data:image/jpeg;base64,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"
 		    },
 		    "code": 200,
 		    "msg": null
@@ -102,7 +100,6 @@
       
    * url POST: {domain}/sendsmscode 
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |body|mobile|stirng| /|Y|/|手机号码|
@@ -111,7 +108,7 @@
 	 
    * 返回结果
    
-   	   {
+   		{
 		    "success": true,
 		    "data": "短信验证码是:960969", //为方便调试输出的，接通短信平台后，此处是没有值的
 		    "code": 200,
@@ -122,7 +119,6 @@
       
    * url POST: {domain}/checkaccount 
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |form|accountId|stirng| /|Y|/|帐号|
@@ -140,7 +136,6 @@
       
    * url POST: {domain}/register 
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |body|accountId|stirng| /|Y|/|帐号|
@@ -161,7 +156,6 @@
       
    * url POST: {domain}/user/logout   
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |header|x-api-token|stirng| /|Y|/|令牌|
@@ -179,7 +173,6 @@
       
    * url PSOT: {domain}/news
    * 请求参数
-   
       |位置|参数|类型|长度|是否必填|Default|描述|
 	 |:----|:----|:----:|:----:|:---:|:---:|:---:|
 	 |body|pageIndex|number| /|N|1|页码|
@@ -221,7 +214,6 @@
         
    * url /news/{id}
    * 请求参数   
-   
    	 |位置|参数|类型|长度|是否必填|Default|描述|   	 
 	|:----|:----|:----:|:----:|:---:|:---:|:---:|
 	|path|id|number| /|Y|1|文章Id|
@@ -349,7 +341,109 @@
 		    "code": 200,
 		    "msg": null
 		}
+ > 用户登出 
+      
+   * url /user/logout
+   * 请求参数
+   * 返回结果
+   
+ > 获取短信验证码 
+        
+   * url /check/getsmscode
+   * 请求参数
+   * 返回结果
  
+> 刷新用户查询 
+  
+  * 适用场景：用户管理列表，会员列表展示   
+  * url /userinfo/search
+  * 请求参数
+  * 返回结果
+  
+ > 保存用户信息 
+      
+   * url /userinfo/save
+   * 请求参数
+   * 返回结果
+   
+ > 保存帐号信息
+ 
+   * 适用场景：修改密码     
+   * url /user/save
+   * 请求参数
+   * 返回结果
+ 
+> 刷新token 
+     
+  * url /refresh/token
+  * 请求参数
+  * 返回结果
+  
+ > 用户登出 
+      
+   * url /user/logout
+   * 请求参数
+   * 返回结果
+   
+ > 获取短信验证码 
+        
+   * url /check/getsmscode
+   * 请求参数
+   * 返回结果
+
+> 刷新token 
+     
+  * url /refresh/token
+  * 请求参数
+  * 返回结果
+  
+ > 用户登出 
+      
+   * url /user/logout
+   * 请求参数
+   * 返回结果
+   
+ > 获取短信验证码 
+        
+   * url /check/getsmscode
+   * 请求参数
+   * 返回结果
+
+> 刷新token 
+     
+  * url /refresh/token
+  * 请求参数
+  * 返回结果
+  
+ > 用户登出 
+      
+   * url /user/logout
+   * 请求参数
+   * 返回结果
+   
+ > 获取短信验证码 
+        
+   * url /check/getsmscode
+   * 请求参数
+   * 返回结果
+
+> 刷新token 
+     
+  * url /refresh/token
+  * 请求参数
+  * 返回结果
+  
+ > 用户登出 
+      
+   * url /user/logout
+   * 请求参数
+   * 返回结果
+   
+ > 获取短信验证码 
+        
+   * url /check/getsmscode
+   * 请求参数
+   * 返回结果
 
       
       

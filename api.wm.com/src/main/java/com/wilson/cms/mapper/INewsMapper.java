@@ -1,14 +1,14 @@
 package com.wilson.cms.mapper;
 
-import com.wilson.cms.po.NewsPo;
-import com.wilson.cms.vo.RequestParam;
-
 import java.util.List;
+
+import com.wilson.cms.po.NewsPo;
+import com.wilson.cms.vo.SearchParam;
 
 public interface INewsMapper {
 
     void add(NewsPo item);
     void update(NewsPo item);
-    List<NewsPo> search(RequestParam args);
+    List<NewsPo> search(SearchParam args);
     NewsPo get(Long id);
 }
