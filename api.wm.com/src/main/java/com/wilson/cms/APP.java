@@ -41,7 +41,11 @@ public class APP {
 	
 		SpringApplication.run(APP.class, args);
 		System.out.println(System.currentTimeMillis());
-		
+		Timestamp ts = new Timestamp(1573932957000L);  
+        Date date = new Date();  
+    
+            date = ts;  
+            System.out.println(date);  
 		
 		//获取Calendar对象对应的时间戳
 		System.out.println("============================");
