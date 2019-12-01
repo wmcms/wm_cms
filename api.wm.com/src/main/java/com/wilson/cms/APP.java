@@ -1,14 +1,10 @@
 package com.wilson.cms;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.naming.java.javaURLContextFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;

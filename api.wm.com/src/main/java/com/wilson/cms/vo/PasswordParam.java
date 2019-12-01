@@ -3,6 +3,7 @@ package com.wilson.cms.vo;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class PasswordParam implements Serializable {
    private  Long userId;
    private  String password;

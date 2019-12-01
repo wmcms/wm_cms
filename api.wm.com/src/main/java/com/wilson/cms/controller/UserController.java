@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilson.cms.config.Cms;
 import com.wilson.cms.po.UserBehaviorPo;
 import com.wilson.cms.po.UserPo;
-import com.wilson.cms.po.UserAccountPo;
 import com.wilson.cms.service.UserService;
 import com.wilson.cms.utils.RedisUtils;
 import com.wilson.cms.vo.BehaviorType;

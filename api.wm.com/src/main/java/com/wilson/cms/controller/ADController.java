@@ -1,17 +1,22 @@
 package com.wilson.cms.controller;
 
-import com.wilson.cms.po.AdPo;
-import com.wilson.cms.service.AdService;
-import com.wilson.cms.vo.PageResult;
-import com.wilson.cms.vo.RequestParam;
-import com.wilson.cms.vo.Result;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.wilson.cms.po.AdPo;
+import com.wilson.cms.service.AdService;
+import com.wilson.cms.vo.PageResult;
+import com.wilson.cms.vo.Result;
+import com.wilson.cms.vo.SearchParam;
 
 /**
  * @ClassName ADController
@@ -33,8 +38,8 @@ public class ADController {
      * @return
      */
     @PostMapping("/search")
-    public Result Search(RequestParam args){
-        PageResult<AdPo> data = adService.searchWithPageList(args);
+    public Result Search(SearchParam args){
+        PageResult<AdPo> data = adService.search(args);
         Result result = Result.Success(data);
         return result;
     }

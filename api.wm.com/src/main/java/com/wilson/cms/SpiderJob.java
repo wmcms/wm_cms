@@ -21,6 +21,7 @@ public class SpiderJob implements Job {
 			// 定时抓取 原始页面
 			SpiderFruit initializeHtml = null;
 			try {
+				@SuppressWarnings("unused")
 				String url ="https://www.dugoogle.com/shijiezhizui/products/";
 				if(i>1)
 					url +=String.format("index_%d.html", i);

@@ -1,10 +1,9 @@
 package com.wilson.cms.mapper;
 
 
-import com.wilson.cms.po.NewsReportPo;
-
-import java.util.List;
 import java.util.Map;
+
+import com.wilson.cms.po.NewsReportPo;
 
 /**
  * 

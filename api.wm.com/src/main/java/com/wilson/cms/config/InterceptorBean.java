@@ -1,15 +1,15 @@
 package com.wilson.cms.config;
 
 
-import com.wilson.cms.filter.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import java.util.List;
+import com.wilson.cms.filter.LoginInterceptor;
 
 @Configuration
 @Component

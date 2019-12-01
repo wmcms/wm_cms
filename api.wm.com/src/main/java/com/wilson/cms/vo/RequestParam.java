@@ -1,12 +1,11 @@
 package com.wilson.cms.vo;
 
-import org.apache.ibatis.type.JdbcType;
-
 import java.io.Serializable;
 
 /**
  * 分页查询参数
  */
+@SuppressWarnings("serial")
 public class RequestParam implements Serializable {
     /**
      * 页码

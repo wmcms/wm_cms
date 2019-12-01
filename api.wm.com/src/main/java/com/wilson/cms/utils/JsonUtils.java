@@ -1,8 +1,8 @@
 package com.wilson.cms.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
 * MD5 工具类-建议添油加醋的对入参 str 改造一下
@@ -26,6 +26,7 @@ public class JsonUtils {
 	}
 
 	//字符串转对象
+	@SuppressWarnings("unchecked")
 	public static <T> T string2Obj(String str,Class<T> clazz){
 		if (StringUtils.isEmpty(str) || clazz == null){
 			return null;

@@ -1,10 +1,9 @@
 package com.wilson.cms.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class RemoveFileParam implements Serializable {
 
     private  String url;

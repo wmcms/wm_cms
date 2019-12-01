@@ -3,6 +3,7 @@ package com.wilson.cms.vo;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class UserVo implements Serializable {
 
     private  String name;

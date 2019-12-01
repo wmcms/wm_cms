@@ -1,7 +1,5 @@
 package com.wilson.cms.po;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NewsPo extends PoBase {

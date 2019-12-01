@@ -1,14 +1,14 @@
 package com.wilson.cms.utils;
 
-import com.wilson.cms.exception.NotSupportExecption;
-import org.springframework.util.DigestUtils;
-
-import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
+
+import org.springframework.util.DigestUtils;
+
+import com.wilson.cms.exception.NotSupportExecption;
 
 /**
  * 字条串工具类

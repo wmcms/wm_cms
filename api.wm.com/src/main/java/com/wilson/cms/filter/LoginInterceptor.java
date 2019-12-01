@@ -1,13 +1,11 @@
 package com.wilson.cms.filter;
 
-import com.wilson.cms.annotation.AllowAnonymous;
-import com.wilson.cms.annotation.Permission;
-import com.wilson.cms.po.UserAccountPo;
-import com.wilson.cms.utils.RedisUtils;
-import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.JsonUtils;
-import com.wilson.cms.utils.StringUtils;
-import com.wilson.cms.vo.Result;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,14 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.wilson.cms.annotation.AllowAnonymous;
+import com.wilson.cms.annotation.Permission;
+import com.wilson.cms.po.UserAccountPo;
+import com.wilson.cms.service.UserService;
+import com.wilson.cms.utils.JsonUtils;
+import com.wilson.cms.utils.RedisUtils;
+import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.Result;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
@@ -29,7 +31,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        boolean isAuth=true;
+        @SuppressWarnings("unused")
+		boolean isAuth=true;
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // 获取方法上的注解
@@ -58,7 +61,8 @@ public class LoginInterceptor implements HandlerInterceptor{
                         }
                         if (permission != null && !StringUtils.isEmpty(permission.value())) {
                             //如果标记了注解，则判断权限
-                            String pv=permission.value();
+                            @SuppressWarnings("unused")
+							String pv=permission.value();
                             responseJson(response,Result.Error("请先登录"));
                             return false;
                         }

@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * 响应
  */
+@SuppressWarnings("serial")
 public class PageResult<T> implements Serializable {
 
     private List<T> Items;

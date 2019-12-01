@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * 响应
  */
+@SuppressWarnings("serial")
 public class Result implements Serializable {
 
     /**

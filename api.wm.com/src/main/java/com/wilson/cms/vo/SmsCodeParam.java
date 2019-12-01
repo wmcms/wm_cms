@@ -2,6 +2,7 @@ package com.wilson.cms.vo;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SmsCodeParam implements Serializable {
 	private String imgCodeId;
 	private String imgCode;

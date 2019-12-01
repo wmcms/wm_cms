@@ -28,7 +28,6 @@ import com.wilson.cms.vo.PageResult;
 import com.wilson.cms.vo.Result;
 import com.wilson.cms.vo.SearchParam;
 import com.wilson.cms.vo.SmsCodeParam;
-import com.zaxxer.hikari.util.SuspendResumeLock;
 
 
 /**
@@ -166,7 +165,7 @@ public class HomeController {
 	public Result SmsCode(@RequestBody SmsCodeParam param) {
 		if(StringUtils.isEmpty(param.getMobile()))
 			return Result.Error("请输入手机号");
-		if(StringUtils.isMobile(param.getMobile())) 
+		if(!StringUtils.isMobile(param.getMobile())) 
 			return Result.Error("请输入正确的手机号");	
 		if(StringUtils.isEmpty(param.getImgCode())||StringUtils.isEmpty(param.getImgCodeId()))
 			return Result.Error("请输入图片验证码");

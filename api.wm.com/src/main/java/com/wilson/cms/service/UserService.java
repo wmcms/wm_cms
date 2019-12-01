@@ -5,20 +5,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wilson.cms.config.Cms;
-import com.wilson.cms.exception.NotSupportExecption;
-import com.wilson.cms.vo.*;
-
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.wilson.cms.utils.*;
-import com.wilson.cms.mapper.*;
-import com.wilson.cms.po.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.transaction.annotation.Transactional;
+import com.wilson.cms.config.Cms;
+import com.wilson.cms.exception.NotSupportExecption;
+import com.wilson.cms.mapper.INewsReportMapper;
+import com.wilson.cms.mapper.IUserAccountMapper;
+import com.wilson.cms.mapper.IUserBehaviorMapper;
+import com.wilson.cms.mapper.IUserMapper;
+import com.wilson.cms.po.UserAccountPo;
+import com.wilson.cms.po.UserBehaviorPo;
+import com.wilson.cms.po.UserPo;
+import com.wilson.cms.utils.Constant;
+import com.wilson.cms.utils.RedisUtils;
+import com.wilson.cms.utils.StringUtils;
+import com.wilson.cms.vo.LoginParam;
+import com.wilson.cms.vo.PageResult;
+import com.wilson.cms.vo.RegisterParam;
+import com.wilson.cms.vo.Result;
+import com.wilson.cms.vo.SearchParam;
+import com.wilson.cms.vo.UserBehaviorVo;
+import com.wilson.cms.vo.UserVo;
 
 /**
  * 系统用户

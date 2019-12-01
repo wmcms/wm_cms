@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 
 //implements Serializable 实现序列化接口便于网络传输
+@SuppressWarnings("serial")
 public class RespondBoot<T> implements Serializable {
 
     //注意无论返回什么必须要有一个状态码~ *

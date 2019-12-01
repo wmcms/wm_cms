@@ -92,7 +92,8 @@ public final class DownloadsUtils {
 
 
     //<!--        Post请求        -->
-    public static SpiderFruit postPageContent(String Url, Map params) throws IOException {
+    @SuppressWarnings("deprecation")
+	public static SpiderFruit postPageContent(String Url, @SuppressWarnings("rawtypes") Map params) throws IOException {
 
         // 创建可关闭的HttpClient实例对象(新版本才可以)相当于创建了一个模拟浏览器
         CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -102,7 +103,8 @@ public final class DownloadsUtils {
         HttpPost httpPost = new HttpPost(Url);
         // 设置POST参数
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        for (Iterator iter = params.keySet().iterator(); iter.hasNext(); ) {
+        for (@SuppressWarnings("rawtypes")
+		Iterator iter = params.keySet().iterator(); iter.hasNext(); ) {
             String name = (String) iter.next();
             String value = String.valueOf(params.get(name));
             nvps.add(new BasicNameValuePair(name, value));

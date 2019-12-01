@@ -1,16 +1,14 @@
 package com.wilson.cms.controller;
 
-import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.wilson.cms.po.MetaPo;
-import com.wilson.cms.vo.RequestParam;
 import com.wilson.cms.service.MetaService;
 import com.wilson.cms.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.wilson.cms.vo.SearchParam;
 
 /**
  * @ClassName MetaController
@@ -27,7 +25,7 @@ public class MetaController
     MetaService metaService;
 
     @PostMapping("/search")
-    public Result search(RequestParam args) {
+    public Result search(SearchParam args) {
         return Result.Success(metaService.search(args)) ;
     }
 

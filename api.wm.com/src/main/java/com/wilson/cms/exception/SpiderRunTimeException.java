@@ -1,13 +1,12 @@
 package com.wilson.cms.exception;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
-
 /**
  * Created by CHENT
  * <p>
  * 自定义爬虫项目异常
  */
 
+@SuppressWarnings("serial")
 public class SpiderRunTimeException extends RuntimeException {
 
     /**

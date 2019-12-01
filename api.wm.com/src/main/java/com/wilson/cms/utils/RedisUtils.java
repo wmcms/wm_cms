@@ -1,15 +1,12 @@
 package com.wilson.cms.utils;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
 * MD5 工具类-建议添油加醋的对入参 str 改造一下
@@ -19,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils {
 
-	@SuppressWarnings("unchecked")
 	@Autowired
 	 RedisTemplate<String, Object> redisTemplate;
 	

@@ -1,10 +1,9 @@
 package com.wilson.cms.mapper;
 
+import java.util.List;
+
 import com.wilson.cms.po.UserPo;
 import com.wilson.cms.vo.SearchParam;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 public interface IUserMapper {
 

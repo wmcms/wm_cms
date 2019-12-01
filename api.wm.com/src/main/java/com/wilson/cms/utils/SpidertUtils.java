@@ -39,10 +39,8 @@ public class SpidertUtils {
         context.append(dataList.getData().toString()); // 将指定值存入
         doc = Jsoup.parse(context.toString());
         Elements elements = doc.select("div");
-        int count=0;
         List<NewsPo> reslt  = new ArrayList<NewsPo>();
         for (Element element : elements) {
-            count++;  // 计数器自增
             NewsPo item = new NewsPo();
             item.setSourceUrl(element.getElementsByTag("a").attr("href"));
             item.setCoverUrl(element.getElementsByTag("img").attr("src"));

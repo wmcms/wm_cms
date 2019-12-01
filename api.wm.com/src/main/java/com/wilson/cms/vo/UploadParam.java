@@ -1,10 +1,11 @@
 package com.wilson.cms.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
 
+
+@SuppressWarnings("serial")
 public class UploadParam implements Serializable {
 
     private  String name;

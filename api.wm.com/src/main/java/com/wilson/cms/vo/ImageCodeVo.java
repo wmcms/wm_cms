@@ -1,8 +1,8 @@
 package com.wilson.cms.vo;
 
 import java.io.Serializable;
-import java.util.List;
 
+@SuppressWarnings("serial")
 public class ImageCodeVo implements Serializable {
 
 	private String id;

@@ -1,14 +1,15 @@
 package com.wilson.cms.controller;
 
-import com.wilson.cms.po.MaterialPo;
-import com.wilson.cms.service.MaterialService;
-import com.wilson.cms.vo.RequestParam;
-import com.wilson.cms.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wilson.cms.service.MaterialService;
+import com.wilson.cms.vo.MaterialVo;
+import com.wilson.cms.vo.Result;
+import com.wilson.cms.vo.SearchParam;
 
 /**
  * @ClassName MaterialController
@@ -25,7 +26,7 @@ public class MaterialController {
     MaterialService materialService;
 
     @PostMapping("/search")
-    public Result search(RequestParam args) {
+    public Result search(SearchParam args) {
         return Result.Success(materialService.search(args)) ;
     }
 
@@ -35,8 +36,8 @@ public class MaterialController {
      * @return
      */
     @PostMapping("/save")
-    public  Result Save(@RequestAttribute Long userId, MaterialPo item) throws Exception {
-        item.setCreateUserId(userId);
+    public  Result Save(@RequestAttribute Long userId, MaterialVo item) throws Exception {
+    	item.getMaterialPo().setCreateUserId(userId);
         return  materialService.save(item);
     }
 
@@ -47,6 +48,6 @@ public class MaterialController {
      */
     @PostMapping("/del")
     public Result delete(Long id){
-        return  materialService.removeAt(id.toString());
+        return  materialService.removeAt(id);
     }
 }

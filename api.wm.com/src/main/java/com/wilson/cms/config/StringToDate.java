@@ -1,11 +1,10 @@
 package com.wilson.cms.config;
 
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.Converter;
-import org.springframework.stereotype.Component;
-
-import java.sql.Timestamp;
 
 
 /**

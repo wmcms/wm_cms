@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wilson.cms.annotation.AllowAnonymous;
-import com.wilson.cms.exception.NotSupportExecption;
 import com.wilson.cms.service.UserService;
-import com.wilson.cms.utils.Constant;
 import com.wilson.cms.utils.RedisUtils;
 import com.wilson.cms.utils.StringUtils;
-import com.wilson.cms.vo.LoginMethod;
-import com.wilson.cms.vo.LoginParam;
 import com.wilson.cms.vo.RegisterParam;
 import com.wilson.cms.vo.Result;
 

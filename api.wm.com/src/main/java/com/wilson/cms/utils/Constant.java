@@ -1,7 +1,5 @@
 package com.wilson.cms.utils;
 
-import java.security.MessageDigest;
-
 /**
 * MD5 工具类-建议添油加醋的对入参 str 改造一下
 * @author Administrator

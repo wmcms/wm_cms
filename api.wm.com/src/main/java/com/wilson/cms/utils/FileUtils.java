@@ -1,14 +1,12 @@
 package com.wilson.cms.utils;
 
-import com.wilson.cms.config.Cms;
-import com.wilson.cms.vo.UploadMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.wilson.cms.config.Cms;
+import com.wilson.cms.vo.UploadMethod;
 
 /**
  * @ClassName FileUtils

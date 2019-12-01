@@ -1,9 +1,12 @@
 package com.wilson.cms;
 
-import org.quartz.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.quartz.JobDataMap;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
 
 /**
  * @ClassName Job
@@ -27,7 +30,8 @@ public class Job implements org.quartz.Job {
 
         // 由于零错误除以此作业将生成的异常的例外（仅在第一次运行）
         try {
-            int result = 4815 / flag;
+            @SuppressWarnings("unused")
+			int result = 4815 / flag;
 
         } catch (Exception e) {
             System.out.println("--- Job1 出错!");

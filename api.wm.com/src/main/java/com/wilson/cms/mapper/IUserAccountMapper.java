@@ -1,6 +1,5 @@
 package com.wilson.cms.mapper;
 import com.wilson.cms.po.UserAccountPo;
-import org.apache.ibatis.annotations.Update;
 
 public interface IUserAccountMapper {
     /**
